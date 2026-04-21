@@ -14,16 +14,6 @@ html,body,h1,h2,h3,h4,h5,h6 {font-family: "Roboto", sans-serif}
 .repo-card:hover {background:#f1f1f1; cursor:pointer;}
 </style>
 </head>
-
-<div id="sidebar-container"></div>
-
-<script>
-fetch('/components/sidebar.html')
-    .then(res => res.text())
-    .then(data => {
-        document.getElementById('sidebar-container').innerHTML = data;
-    });
-</script>
   
 <body class="w3-light-grey">
 
@@ -33,6 +23,7 @@ fetch('/components/sidebar.html')
 <!-- LEFT COLUMN -->
 <div class="w3-third">
 
+<!-- PROFILE CARD (unchanged) -->
 <div class="w3-white w3-text-grey w3-card-4">
 <div class="w3-display-container">
 <img src="./avatar_hat.png" style="width:100%" alt="Avatar">
@@ -49,6 +40,21 @@ fetch('/components/sidebar.html')
 <a href="https://github.com/william112792" target="_blank">GitHub Portfolio</a></p>
 
 <hr>
+
+<p class="w3-large"><b><i class="fa fa-cogs fa-fw w3-margin-right w3-text-teal"></i>Tech Stack</b></p>
+<p>PowerShell, Intune, Autopilot, Power Automate, Azure AD, AI Tools</p>
+
+<br>
+
+</div>
+</div>
+
+<br>
+
+<!-- 🔥 SIDEBAR COMPONENT LOADS HERE -->
+<div id="sidebar-container"></div>
+
+</div>
 
 <!-- SKILLS -->
 <p class="w3-large"><b><i class="fa fa-asterisk fa-fw w3-margin-right w3-text-teal"></i>Core Skills</b></p>
@@ -189,6 +195,24 @@ and workflow-driven system integration.
 
 <p>Built for scalable portfolio growth • Hosted on GitHub</p>
 </footer>
+
+<script>
+fetch('/components/sidebar.html')
+    .then(response => response.text())
+    .then(data => {
+        document.getElementById('sidebar-container').innerHTML = data;
+
+        // Re-bind toggle after load
+        window.toggleSection = function(id) {
+            var x = document.getElementById(id);
+            if (x.className.indexOf("w3-show") == -1) {
+                x.className += " w3-show";
+            } else {
+                x.className = x.className.replace(" w3-show", "");
+            }
+        };
+    });
+</script>
 
 </body>
 </html>
