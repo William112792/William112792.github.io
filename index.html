@@ -15,7 +15,49 @@ html,body,h1,h2,h3,h4,h5,h6 {font-family: "Roboto", sans-serif}
 </style>
 </head>
 
+<!-- The Body Begins -->
 <body class="w3-light-grey">
+
+<!-- Script for banner -->
+<script>
+  (function () {
+    fetch('./banner.json')
+      .then(function (r) { return r.json(); })
+      .then(function (cfg) {
+        if (!cfg || cfg.enabled === false) return;
+        var colors = {
+          github: { bg: '#1a1a2e', text: '#c8c8e0', pillBg: '#3c3489', pillText: '#cecbf6' },
+          prod:   { bg: '#0f2d1a', text: '#b6e4c6', pillBg: '#1d9e75', pillText: '#e1f5ee' },
+          qa:     { bg: '#2d1f00', text: '#f5d99a', pillBg: '#ba7517', pillText: '#faeeda' },
+          test:   { bg: '#1a0d0d', text: '#f0b0b0', pillBg: '#a32d2d', pillText: '#fcebeb' }
+        };
+        var c = colors[cfg.env] || colors.github;
+        var banner = document.createElement('div');
+        banner.id = 'env-banner';
+        banner.style.cssText = [
+          'display:flex', 'align-items:center', 'gap:10px',
+          'padding:8px 16px', 'font-family:sans-serif', 'font-size:13px',
+          'background:' + c.bg, 'color:' + c.text,
+          'position:sticky', 'top:0', 'z-index:9999',
+          'border-bottom:1px solid rgba(255,255,255,0.08)'
+        ].join(';');
+        var pill = document.createElement('span');
+        pill.textContent = cfg.env.toUpperCase();
+        pill.style.cssText = [
+          'font-size:11px', 'font-weight:600', 'padding:2px 10px',
+          'border-radius:20px', 'letter-spacing:0.04em',
+          'background:' + c.pillBg, 'color:' + c.pillText
+        ].join(';');
+        var msg = document.createElement('span');
+        msg.textContent = cfg.message || '';
+        msg.style.cssText = 'font-size:12px;opacity:0.85';
+        banner.appendChild(pill);
+        banner.appendChild(msg);
+        document.body.insertBefore(banner, document.body.firstChild);
+      })
+      .catch(function () {});
+  })();
+</script>
 
 <div class="w3-content w3-margin-top" style="max-width:1400px;">
 <div class="w3-row-padding">
