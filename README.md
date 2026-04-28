@@ -114,3 +114,5 @@ This portfolio is built to reflect how I actually work:
 - Automation-first
 
 If you're looking for someone who can reduce operational overhead, improve system reliability, and build forward-thinking automation solutions, I’d welcome the opportunity to connect.
+
+![QR Code](https://github.com/William112792/William112792.github.io/blob/main/qr_codelink.jpg?raw=true)
