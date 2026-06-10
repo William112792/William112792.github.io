@@ -1,299 +1,3927 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<title>Billy Gordon | Endpoint Automation Engineer</title>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-
-<link rel="stylesheet" href="https://www.w3schools.com/w3css/5/w3.css">
-<link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Roboto'>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-
+<meta charset="UTF-8"/>
+<link rel="icon"            type="image/x-icon"   href="favicon.ico"/>
+<link rel="icon"            type="image/svg+xml"  href="favicon.svg"/>
+<link rel="apple-touch-icon"                      href="favicon.svg"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Billy Gordon · Endpoint Automation Engineer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Syne:wght@400;700;800&display=swap" rel="stylesheet"/>
 <style>
-html,body,h1,h2,h3,h4,h5,h6 {font-family: "Roboto", sans-serif}
-.repo-card:hover {background:#f1f1f1; cursor:pointer;}
+/* ── Design tokens — matching ip-saas / uptime-saas palette ─────────────── */
+:root {
+  --bg:       #0a0e14;
+  --bg2:      #0f1520;
+  --bg3:      #131d2e;
+  --border:   #1e2d42;
+  --text:     #c8d8e8;
+  --muted:    #4a6080;
+  --accent:   #00e5ff;
+  --accent2:  #39ff7a;
+  --accent3:  #ff8c00;
+  --danger:   #ff3b5c;
+  --font-mono: 'Space Mono', monospace;
+  --font-sans: 'Syne', sans-serif;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-sans);
+  font-size: 16px;
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+/* ── Scanline overlay (matches uptime-saas aesthetic) ────────────────────── */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(0,229,255,0.012) 2px,
+    rgba(0,229,255,0.012) 4px
+  );
+  pointer-events: none;
+  z-index: 9999;
+}
+
+/* ── Grid background ─────────────────────────────────────────────────────── */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(0,229,255,0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0,229,255,0.03) 1px, transparent 1px);
+  background-size: 40px 40px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ── Nav ─────────────────────────────────────────────────────────────────── */
+nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 1000;
+  background: rgba(10,14,20,0.85);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  padding: 0 2rem;
+  height: 52px;
+}
+.nav-logo {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--accent);
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.nav-logo::before {
+  content: '';
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 8px var(--accent);
+  animation: pulse 2s infinite;
+}
+@keyframes pulse {
+  0%, 100% { opacity: 1; box-shadow: 0 0 8px var(--accent); }
+  50%       { opacity: 0.5; box-shadow: 0 0 2px var(--accent); }
+}
+.nav-links {
+  display: flex;
+  gap: 1.5rem;
+  margin-left: auto;
+  list-style: none;
+}
+.nav-links a {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+.nav-links a:hover { color: var(--accent); }
+
+/* ── Hero ────────────────────────────────────────────────────────────────── */
+.hero {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  position: relative;
+  z-index: 1;
+  padding: 80px 2rem 4rem;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+.hero-inner {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 4rem;
+  align-items: center;
+  width: 100%;
+}
+.hero-eyebrow {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.2em;
+  color: var(--accent);
+  text-transform: uppercase;
+  margin-bottom: 1rem;
+  opacity: 0;
+  animation: fadeUp 0.8s 0.2s forwards;
+}
+.hero-name {
+  font-size: clamp(2.8rem, 6vw, 5rem);
+  font-weight: 800;
+  line-height: 1.0;
+  color: #fff;
+  margin-bottom: 0.5rem;
+  opacity: 0;
+  animation: fadeUp 0.8s 0.4s forwards;
+}
+.hero-name span { color: var(--accent); }
+.hero-title {
+  font-family: var(--font-mono);
+  font-size: clamp(0.75rem, 1.5vw, 0.95rem);
+  color: var(--muted);
+  letter-spacing: 0.08em;
+  margin-bottom: 1.5rem;
+  opacity: 0;
+  animation: fadeUp 0.8s 0.6s forwards;
+}
+.hero-headline {
+  font-size: 1.05rem;
+  color: var(--text);
+  max-width: 520px;
+  margin-bottom: 2rem;
+  opacity: 0;
+  animation: fadeUp 0.8s 0.8s forwards;
+  line-height: 1.7;
+}
+.hero-stats {
+  display: flex;
+  gap: 2rem;
+  margin-bottom: 2.5rem;
+  opacity: 0;
+  animation: fadeUp 0.8s 1.0s forwards;
+}
+.stat { display: flex; flex-direction: column; gap: 0.2rem; }
+.stat-num {
+  font-family: var(--font-mono);
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: var(--accent2);
+  line-height: 1;
+}
+.stat-label {
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.1em;
+  color: var(--muted);
+  text-transform: uppercase;
+}
+.hero-actions {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  opacity: 0;
+  animation: fadeUp 0.8s 1.2s forwards;
+}
+.btn-primary {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 0.7rem 1.5rem;
+  background: var(--accent);
+  color: var(--bg);
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+  font-weight: 700;
+  transition: box-shadow 0.2s, transform 0.2s;
+  display: inline-block;
+}
+.btn-primary:hover { box-shadow: 0 0 24px rgba(0,229,255,0.4); transform: translateY(-1px); }
+.btn-ghost {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 0.7rem 1.5rem;
+  background: transparent;
+  color: var(--accent);
+  border: 1px solid var(--accent);
+  cursor: pointer;
+  text-decoration: none;
+  transition: background 0.2s, transform 0.2s;
+  display: inline-block;
+}
+.btn-ghost:hover { background: rgba(0,229,255,0.08); transform: translateY(-1px); }
+
+.hero-avatar {
+  opacity: 0;
+  animation: fadeIn 1s 0.6s forwards;
+  position: relative;
+}
+.hero-avatar img {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  border: 2px solid var(--border);
+  object-fit: cover;
+  display: block;
+  position: relative;
+  z-index: 1;
+}
+.hero-avatar::before {
+  content: '';
+  position: absolute;
+  inset: -8px;
+  border-radius: 50%;
+  border: 1px solid rgba(0,229,255,0.2);
+  animation: spin 20s linear infinite;
+}
+.hero-avatar::after {
+  content: '';
+  position: absolute;
+  inset: -16px;
+  border-radius: 50%;
+  border: 1px dashed rgba(0,229,255,0.1);
+  animation: spin 30s linear infinite reverse;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/* ── Section layout ──────────────────────────────────────────────────────── */
+section {
+  position: relative;
+  z-index: 1;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 5rem 2rem;
+}
+.section-label {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.2em;
+  color: var(--accent);
+  text-transform: uppercase;
+  margin-bottom: 0.75rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+.section-label::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+}
+.section-title {
+  font-size: clamp(1.6rem, 3vw, 2.4rem);
+  font-weight: 800;
+  color: #fff;
+  margin-bottom: 3rem;
+  line-height: 1.1;
+}
+
+/* ── Reveal on scroll ────────────────────────────────────────────────────── */
+.reveal {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+.reveal-delay-1 { transition-delay: 0.1s; }
+.reveal-delay-2 { transition-delay: 0.2s; }
+.reveal-delay-3 { transition-delay: 0.3s; }
+.reveal-delay-4 { transition-delay: 0.4s; }
+.reveal-delay-5 { transition-delay: 0.5s; }
+.reveal-delay-6 { transition-delay: 0.6s; }
+
+/* ── Skills ──────────────────────────────────────────────────────────────── */
+.skills-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 0.75rem;
+}
+.skill-tag {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  padding: 0.6rem 1rem;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: var(--text);
+  letter-spacing: 0.05em;
+  transition: border-color 0.2s, color 0.2s, transform 0.2s;
+  cursor: default;
+}
+.skill-tag:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+  transform: translateX(3px);
+}
+
+/* ── Experience ──────────────────────────────────────────────────────────── */
+.exp-card {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  padding: 2rem;
+  margin-bottom: 1.5rem;
+  position: relative;
+  transition: border-color 0.2s, transform 0.2s;
+}
+.exp-card::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  width: 3px;
+  background: var(--accent);
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+.exp-card:hover { border-color: rgba(0,229,255,0.3); transform: translateX(4px); }
+.exp-card:hover::before { opacity: 1; }
+.exp-role {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 0.25rem;
+}
+.exp-company {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: var(--accent);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 0.25rem;
+}
+.exp-period {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  color: var(--muted);
+  margin-bottom: 1.25rem;
+}
+.exp-bullets {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+.exp-bullets li {
+  font-size: 0.9rem;
+  color: var(--text);
+  display: flex;
+  gap: 0.75rem;
+  align-items: baseline;
+}
+.exp-bullets li::before {
+  content: '→';
+  font-family: var(--font-mono);
+  color: var(--accent2);
+  flex-shrink: 0;
+  font-size: 0.75rem;
+}
+
+/* ── Certification / Education cards ─────────────────────────────────────── */
+.certs-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1.25rem;
+}
+.cert-card {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  position: relative;
+  overflow: hidden;
+  transition: border-color 0.25s, transform 0.25s, box-shadow 0.25s;
+  min-height: 180px;
+}
+.cert-card::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--accent), transparent);
+  opacity: 0;
+  transition: opacity 0.25s;
+}
+.cert-card:hover {
+  border-color: rgba(0,229,255,0.35);
+  transform: translateY(-3px);
+  box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+}
+.cert-card:hover::after { opacity: 1; }
+
+.cert-issuer {
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: auto;
+  padding-bottom: 0.75rem;
+}
+.cert-name {
+  font-size: 1.0rem;
+  font-weight: 700;
+  color: #fff;
+  line-height: 1.3;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  padding: 0.5rem 0;
+}
+.cert-verify {
+  font-family: var(--font-mono);
+  font-size: 0.58rem;
+  color: var(--accent);
+  letter-spacing: 0.08em;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  margin-top: 0.4rem;
+  opacity: 0.7;
+  transition: opacity 0.2s, letter-spacing 0.2s;
+  padding: 0.2em 0;
+}
+.cert-verify:hover {
+  opacity: 1;
+  letter-spacing: 0.12em;
+}
+.cert-footer {
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-end;
+  gap: 0.5rem;
+  padding-top: 1rem;
+  margin-top: auto;
+  border-top: 1px solid var(--border);
+  flex-direction: column;
+  text-align: right;
+}
+.cert-date {
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  color: var(--muted);
+  letter-spacing: 0.05em;
+}
+.cert-level {
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  color: var(--accent2);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.cert-code {
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  color: var(--accent3);
+  letter-spacing: 0.1em;
+  background: rgba(255,140,0,0.1);
+  border: 1px solid rgba(255,140,0,0.2);
+  padding: 0.1em 0.4em;
+  border-radius: 2px;
+}
+
+/* ── Projects / Portfolio cards ──────────────────────────────────────────── */
+.projects-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 1.25rem;
+}
+.project-card {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  padding: 1.75rem;
+  position: relative;
+  overflow: hidden;
+  transition: border-color 0.25s, transform 0.25s;
+  text-decoration: none;
+  display: block;
+}
+.project-card::before {
+  content: '';
+  position: absolute;
+  top: -40px; right: -40px;
+  width: 100px; height: 100px;
+  border-radius: 50%;
+  background: rgba(0,229,255,0.04);
+  transition: transform 0.4s;
+}
+.project-card:hover { border-color: rgba(0,229,255,0.35); transform: translateY(-3px); }
+.project-card:hover::before { transform: scale(2.5); }
+.project-tag {
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent2);
+  margin-bottom: 0.75rem;
+}
+.project-name {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 0.6rem;
+  line-height: 1.3;
+}
+.project-desc {
+  font-size: 0.85rem;
+  color: var(--text);
+  line-height: 1.6;
+  margin-bottom: 1.25rem;
+}
+.project-link {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  color: var(--accent);
+  letter-spacing: 0.08em;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  text-decoration: none;
+}
+.project-link::after { content: '→'; transition: transform 0.2s; }
+.project-card:hover .project-link::after { transform: translateX(4px); }
+
+/* ── Live tools section ──────────────────────────────────────────────────── */
+.tools-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  gap: 1.25rem;
+}
+.tool-card {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  padding: 2rem;
+  position: relative;
+  overflow: hidden;
+  transition: border-color 0.25s, transform 0.25s, box-shadow 0.25s;
+}
+.tool-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--accent), var(--accent2));
+}
+.tool-card:hover {
+  border-color: rgba(0,229,255,0.35);
+  transform: translateY(-3px);
+  box-shadow: 0 12px 40px rgba(0,0,0,0.5);
+}
+.tool-status {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.1em;
+  color: var(--accent2);
+  text-transform: uppercase;
+  margin-bottom: 1rem;
+}
+.tool-status-dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--accent2);
+  animation: pulse 2s infinite;
+}
+.tool-name {
+  font-size: 1.3rem;
+  font-weight: 800;
+  color: #fff;
+  margin-bottom: 0.5rem;
+}
+.tool-desc {
+  font-size: 0.88rem;
+  color: var(--text);
+  line-height: 1.6;
+  margin-bottom: 1.5rem;
+}
+.tool-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-bottom: 1.5rem;
+}
+.tool-tag {
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  padding: 0.2em 0.6em;
+  border: 1px solid var(--border);
+  color: var(--muted);
+  letter-spacing: 0.06em;
+}
+
+/* ── Footer ──────────────────────────────────────────────────────────────── */
+footer {
+  position: relative;
+  z-index: 1;
+  border-top: 1px solid var(--border);
+  background: var(--bg2);
+  padding: 3rem 2rem;
+  text-align: center;
+}
+.footer-name {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.15em;
+  color: var(--accent);
+  text-transform: uppercase;
+  margin-bottom: 1rem;
+}
+.footer-links {
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+}
+.footer-links a {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.08em;
+  color: var(--muted);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+.footer-links a:hover { color: var(--accent); }
+.footer-copy {
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  color: var(--muted);
+  letter-spacing: 0.05em;
+}
+
+/* ── Responsive ──────────────────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .hero-inner { grid-template-columns: 1fr; }
+  .hero-avatar { display: none; }
+  .hero-stats { gap: 1.25rem; }
+  nav { padding: 0 1rem; }
+  .nav-links { gap: 1rem; }
+  section { padding: 3.5rem 1rem; }
+}
+
+/* ── Skeleton loader ─────────────────────────────────────────────────────── */
+#skeleton-overlay {
+  position: fixed;
+  inset: 0;
+  background: var(--bg);
+  z-index: 9998;
+  display: flex;
+  flex-direction: column;
+  padding: 52px 0 0;
+  transition: opacity 0.5s ease;
+}
+#skeleton-overlay.hidden { opacity: 0; pointer-events: none; }
+.sk-nav {
+  height: 52px;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  padding: 0 2rem;
+  gap: 2rem;
+  position: absolute;
+  top: 0; left: 0; right: 0;
+}
+.sk-block {
+  background: linear-gradient(90deg, var(--bg2) 25%, var(--bg3) 50%, var(--bg2) 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.4s infinite;
+  border-radius: 2px;
+}
+@keyframes shimmer {
+  0%   { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+.sk-hero {
+  display: flex;
+  align-items: center;
+  max-width: 1100px;
+  margin: 80px auto 0;
+  padding: 4rem 2rem;
+  gap: 4rem;
+  width: 100%;
+}
+.sk-hero-text { flex: 1; display: flex; flex-direction: column; gap: 1rem; }
+.sk-avatar {
+  width: 200px; height: 200px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+/* ── Sound toggle ────────────────────────────────────────────────────────── */
+.sound-toggle {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  color: var(--muted);
+  cursor: pointer;
+  padding: 0.28rem 0.55rem;
+  border-radius: 3px;
+  transition: color 0.2s, border-color 0.2s, background 0.2s;
+  flex-shrink: 0;
+  line-height: 1;
+}
+.sound-toggle.active {
+  color: var(--accent);
+  border-color: var(--accent);
+  background: rgba(0,229,255,0.06);
+}
+.sound-toggle:hover { border-color: var(--accent); color: var(--accent); }
+[data-theme="light"] .sound-toggle.active { background: rgba(0,102,204,0.06); }
+[data-theme="noir"]  .sound-toggle.active {
+  color: var(--accent);
+  border-color: var(--accent);
+  background: rgba(122,154,184,0.06);
+}
+.hamburger {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  cursor: pointer;
+  padding: 4px;
+  margin-left: auto;
+  background: none;
+  border: none;
+}
+.hamburger span {
+  display: block;
+  width: 22px;
+  height: 2px;
+  background: var(--accent);
+  transition: transform 0.3s, opacity 0.3s;
+}
+.hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.hamburger.open span:nth-child(2) { opacity: 0; }
+.hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+@media (max-width: 768px) {
+  .hamburger { display: flex; }
+  .nav-links {
+    display: none;
+    position: fixed;
+    top: 52px; left: 0; right: 0;
+    background: rgba(10,14,20,0.97);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--border);
+    flex-direction: column;
+    padding: 1.5rem 2rem;
+    gap: 1.25rem;
+    z-index: 999;
+    margin-left: 0;
+  }
+  .nav-links.open { display: flex; }
+  .nav-links a { font-size: 0.8rem; }
+  .hero-avatar { display: none; }
+  .hero-stats { gap: 1.25rem; flex-wrap: wrap; }
+  section { padding: 3.5rem 1rem; }
+  nav { padding: 0 1rem; }
+}
+
+/* ── Typing cursor ───────────────────────────────────────────────────────── */
+.typing-cursor {
+  display: inline-block;
+  width: 2px;
+  height: 1em;
+  background: var(--accent);
+  vertical-align: text-bottom;
+  margin-left: 2px;
+  animation: blink 0.75s step-end infinite;
+}
+@keyframes blink { 50% { opacity: 0; } }
+
+/* ── Glitch number effect ────────────────────────────────────────────────── */
+.stat-num {
+  position: relative;
+  display: inline-block;
+}
+.stat-num.glitching {
+  animation: glitch-num 0.08s steps(1) infinite;
+}
+@keyframes glitch-num {
+  0%   { color: var(--accent2); text-shadow: none; }
+  33%  { color: var(--accent);  text-shadow: 2px 0 var(--danger); transform: skewX(-2deg); }
+  66%  { color: var(--accent3); text-shadow: -2px 0 var(--accent); transform: skewX(1deg); }
+  100% { color: var(--accent2); text-shadow: none; transform: none; }
+}
+
+/* ── Enhanced avatar ─────────────────────────────────────────────────────── */
+.hero-avatar {
+  opacity: 0;
+  animation: fadeIn 1s 0.6s forwards;
+  position: relative;
+  width: 200px;
+  height: 200px;
+  flex-shrink: 0;
+}
+.hero-avatar img {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  border: 2px solid var(--border);
+  object-fit: cover;
+  display: block;
+  position: relative;
+  z-index: 1;
+}
+/* Orbit ring 1 — slow spin */
+.hero-avatar::before {
+  content: '';
+  position: absolute;
+  inset: -10px;
+  border-radius: 50%;
+  border: 1px solid rgba(0,229,255,0.3);
+  border-top-color: var(--accent);
+  border-right-color: transparent;
+  animation: orbit1 6s linear infinite;
+  z-index: 2;
+}
+/* Orbit ring 2 — counter slower */
+.hero-avatar::after {
+  content: '';
+  position: absolute;
+  inset: -20px;
+  border-radius: 50%;
+  border: 1px dashed rgba(0,229,255,0.15);
+  border-bottom-color: rgba(57,255,122,0.4);
+  border-left-color: transparent;
+  animation: orbit2 12s linear infinite;
+  z-index: 2;
+}
+@keyframes orbit1 { to { transform: rotate(360deg); } }
+@keyframes orbit2 { to { transform: rotate(-360deg); } }
+
+/* Scan line sweeping over avatar */
+.avatar-wrap {
+  position: relative;
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  overflow: visible;
+}
+.avatar-scan {
+  position: absolute;
+  left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(90deg,
+    transparent 0%,
+    rgba(0,229,255,0.0) 20%,
+    rgba(0,229,255,0.6) 50%,
+    rgba(0,229,255,0.0) 80%,
+    transparent 100%
+  );
+  top: 0;
+  z-index: 3;
+  animation: scan-sweep 3s ease-in-out infinite;
+  border-radius: 50%;
+  mix-blend-mode: screen;
+  pointer-events: none;
+}
+@keyframes scan-sweep {
+  0%   { top: 0%;  opacity: 0; }
+  10%  { opacity: 1; }
+  90%  { opacity: 1; }
+  100% { top: 100%; opacity: 0; }
+}
+/* Clip scan to circle */
+.avatar-clip {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  overflow: hidden;
+  z-index: 3;
+  pointer-events: none;
+}
+.avatar-clip .avatar-scan {
+  position: absolute;
+  left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(90deg,
+    transparent 0%,
+    rgba(0,229,255,0.5) 50%,
+    transparent 100%
+  );
+  animation: scan-sweep 3s ease-in-out infinite;
+}
+
+/* ── Soft click audio visual feedback for skills ──────────────────────────── */
+.skill-tag {
+  cursor: pointer;
+  user-select: none;
+}
+.skill-tag.clicked {
+  border-color: var(--accent2);
+  color: var(--accent2);
+  transform: translateX(3px) scale(0.97);
+}
+
+
+/* ══════════════════════════════════════════════════════════════════════════
+   THEME SYSTEM
+   Default (data-theme="cyber")  = current dark cyan  — middle toggle
+   data-theme="light"            = clean white/slate   — left toggle
+   data-theme="noir"             = near-black minimal  — right toggle
+   ══════════════════════════════════════════════════════════════════════════ */
+
+/* ── Light theme ─────────────────────────────────────────────────────────── */
+[data-theme="light"] {
+  --bg:      #f4f6f9;
+  --bg2:     #ffffff;
+  --bg3:     #edf0f4;
+  --border:  #d0d8e4;
+  --text:    #2a3a4a;
+  --muted:   #7a8fa8;
+  --accent:  #0066cc;
+  --accent2: #00875a;
+  --accent3: #e07b00;
+  --danger:  #cc2244;
+}
+[data-theme="light"] body::before { opacity: 0; }
+[data-theme="light"] body::after  { background-image:
+    linear-gradient(rgba(0,102,204,0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0,102,204,0.04) 1px, transparent 1px);
+}
+[data-theme="light"] nav {
+  background: rgba(244,246,249,0.92);
+  border-bottom-color: var(--border);
+}
+[data-theme="light"] .nav-logo::before { box-shadow: 0 0 8px var(--accent); }
+[data-theme="light"] footer { background: #e8edf3; }
+[data-theme="light"] .hero-name { color: #111a26; }
+[data-theme="light"] .skill-tag  { background: #fff; }
+[data-theme="light"] .exp-card   { background: #fff; }
+[data-theme="light"] .cert-card  { background: #fff; }
+[data-theme="light"] .tool-card  { background: #fff; }
+[data-theme="light"] .project-card { background: #fff; color: var(--text); }
+[data-theme="light"] .project-name { color: #111a26; }
+[data-theme="light"] .exp-role   { color: #111a26; }
+[data-theme="light"] .cert-name  { color: #111a26; }
+[data-theme="light"] .tool-name  { color: #111a26; }
+[data-theme="light"] .dropdown-menu { background: #fff; border-color: var(--border); }
+
+/* ── Noir theme ──────────────────────────────────────────────────────────── */
+[data-theme="noir"] {
+  --bg:      #0c0c0c;
+  --bg2:     #131313;
+  --bg3:     #1a1a1a;
+  --border:  #252525;
+  --text:    #9aabb8;
+  --muted:   #404040;
+  --accent:  #7a9ab8;
+  --accent2: #6a8a70;
+  --accent3: #8a7a60;
+  --danger:  #8a3040;
+}
+[data-theme="noir"] body::before { opacity: 0.3; }
+[data-theme="noir"] body::after  { background-image:
+    linear-gradient(rgba(122,154,184,0.02) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(122,154,184,0.02) 1px, transparent 1px);
+}
+[data-theme="noir"] .nav-logo::before { animation: none; opacity: 0.6; box-shadow: none; }
+[data-theme="noir"] .hero-name span   { color: var(--text); }
+[data-theme="noir"] .btn-primary      { background: var(--accent); color: #0c0c0c; }
+[data-theme="noir"] .btn-primary:hover { box-shadow: 0 0 16px rgba(122,154,184,0.3); }
+[data-theme="noir"] .typing-cursor    { background: var(--muted); }
+[data-theme="noir"] .tool-card::before { background: linear-gradient(90deg, var(--accent), var(--accent2)); opacity: 0.5; }
+[data-theme="noir"] .dropdown-menu    { background: #131313; }
+
+/* ── Theme toggle widget ─────────────────────────────────────────────────── */
+.theme-toggle {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  padding: 3px;
+  margin-left: auto;
+  flex-shrink: 0;
+}
+.theme-btn {
+  font-family: var(--font-mono);
+  font-size: 0.55rem;
+  letter-spacing: 0.06em;
+  padding: 0.25rem 0.55rem;
+  background: transparent;
+  border: none;
+  color: var(--muted);
+  cursor: pointer;
+  border-radius: 2px;
+  transition: background 0.2s, color 0.2s;
+  white-space: nowrap;
+  line-height: 1.4;
+}
+.theme-btn:hover { color: var(--text); }
+.theme-btn.active {
+  background: var(--accent);
+  color: var(--bg);
+  font-weight: 700;
+}
+[data-theme="light"] .theme-btn.active { color: #fff; }
+[data-theme="noir"]  .theme-btn.active { background: var(--accent); color: #0c0c0c; }
+
+/* ── Nav dropdowns ───────────────────────────────────────────────────────── */
+.nav-item { position: relative; list-style: none; padding-bottom: 8px; margin-bottom: -8px; }
+.nav-item > a { display: flex; align-items: center; gap: 0.3rem; }
+.nav-item > a::after {
+  content: '▾';
+  font-size: 0.5rem;
+  opacity: 0.5;
+  transition: transform 0.2s;
+  display: inline-block;
+}
+.nav-item.no-arrow > a::after { display: none; }
+.nav-item.dd-open > a::after { transform: rotate(-180deg); opacity: 1; }
+
+.dropdown-menu {
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  min-width: 220px;
+  z-index: 2000;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateX(-50%) translateY(-4px);
+  transition: opacity 0.15s ease, transform 0.15s ease;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+  padding-top: 8px;
+  margin-top: -1px;
+}
+.dropdown-menu::before {
+  content: '';
+  position: absolute;
+  top: -8px; left: 0; right: 0;
+  height: 8px;
+  background: transparent;
+}
+/* JS-managed open state — resize-safe, no CSS :hover dependency */
+.nav-item.dd-open .dropdown-menu {
+  opacity: 1;
+  pointer-events: all;
+  transform: translateX(-50%) translateY(0);
+}
+/* Keyboard fallback via focus */
+.nav-item:focus-within .dropdown-menu {
+  opacity: 1;
+  pointer-events: all;
+  transform: translateX(-50%) translateY(0);
+}
+.dropdown-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  padding: 0.65rem 1rem;
+  border-bottom: 1px solid var(--border);
+  text-decoration: none;
+  transition: background 0.15s;
+}
+.dropdown-item:last-child { border-bottom: none; }
+.dropdown-item:hover { background: rgba(0,229,255,0.05); }
+.dropdown-item-name {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  color: var(--text);
+  letter-spacing: 0.04em;
+}
+.dropdown-item-meta {
+  font-family: var(--font-mono);
+  font-size: 0.58rem;
+  color: var(--muted);
+  letter-spacing: 0.06em;
+}
+.dropdown-item-code {
+  font-family: var(--font-mono);
+  font-size: 0.56rem;
+  color: var(--accent3);
+  letter-spacing: 0.08em;
+}
+.dropdown-verify {
+  font-family: var(--font-mono);
+  font-size: 0.56rem;
+  color: var(--accent);
+  letter-spacing: 0.06em;
+  margin-top: 0.1rem;
+}
+[data-theme="light"] .dropdown-item:hover { background: rgba(0,102,204,0.05); }
+[data-theme="noir"]  .dropdown-item:hover { background: rgba(122,154,184,0.05); }
+
+/* Mobile dropdowns — expand inline */
+@media (max-width: 768px) {
+  .dropdown-menu {
+    position: static;
+    transform: none;
+    opacity: 1;
+    pointer-events: all;
+    box-shadow: none;
+    border: none;
+    border-left: 2px solid var(--border);
+    margin-left: 0.5rem;
+    padding-left: 0.5rem;
+    display: none;
+  }
+  .nav-item.mobile-open .dropdown-menu { display: block; }
+  .nav-item > a::after { transition: transform 0.2s; }
+  .nav-item.mobile-open > a::after { transform: rotate(-180deg); }
+  .theme-toggle { order: -1; }
+}
+
+/* ── Contact section ─────────────────────────────────────────────────────── */
+.contact-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+}
+@media (max-width: 768px) { .contact-grid { grid-template-columns: 1fr; } }
+
+.contact-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+.contact-label {
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 0.3rem;
+  display: block;
+}
+.contact-input,
+.contact-textarea {
+  width: 100%;
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  color: var(--text);
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  padding: 0.7rem 1rem;
+  outline: none;
+  transition: border-color 0.2s;
+  resize: vertical;
+  border-radius: 0;
+  -webkit-appearance: none;
+}
+.contact-input:focus,
+.contact-textarea:focus { border-color: var(--accent); }
+.contact-textarea { min-height: 120px; }
+.contact-submit {
+  align-self: flex-start;
+}
+.form-status {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.06em;
+  min-height: 1.2rem;
+}
+.form-status.ok   { color: var(--accent2); }
+.form-status.err  { color: var(--danger); }
+
+.contact-links {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+.contact-link-item {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem;
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  text-decoration: none;
+  transition: border-color 0.2s, transform 0.2s;
+}
+.contact-link-item:hover {
+  border-color: var(--accent);
+  transform: translateX(4px);
+}
+.contact-link-icon {
+  font-size: 1.2rem;
+  flex-shrink: 0;
+  width: 2rem;
+  text-align: center;
+}
+.contact-link-label {
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  color: var(--muted);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-bottom: 0.15rem;
+}
+.contact-link-value {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--text);
+}
+.contact-link-item:hover .contact-link-value { color: var(--accent); }
+/* Fiverr placeholder — hidden until Fiverr links are added */
+.contact-fiverr-placeholder { display: none; }
+
+
+/* ── Banner + Maintenance ────────────────────────────────────────────────── */
+#site-banner {
+  position: fixed;
+  top: 52px; left: 0; right: 0;
+  z-index: 997;
+  padding: 0.4rem 2rem;
+  display: none; /* shown by JS after JSON load */
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.1em;
+  border-bottom: 1px solid transparent;
+}
+#site-banner.env-github { background: rgba(0,229,255,0.08); border-color: rgba(0,229,255,0.2); color: var(--accent); }
+#site-banner.env-prod   { background: rgba(57,255,122,0.08); border-color: rgba(57,255,122,0.2); color: var(--accent2); }
+#site-banner.env-qa     { background: rgba(255,140,0,0.08);  border-color: rgba(255,140,0,0.2);  color: var(--accent3); }
+#site-banner.env-test   { background: rgba(255,59,92,0.08);  border-color: rgba(255,59,92,0.2);  color: var(--danger);  }
+.banner-env-tag {
+  border: 1px solid currentColor;
+  padding: 0.1em 0.45em;
+  border-radius: 2px;
+  opacity: 0.8;
+  text-transform: uppercase;
+  font-size: 0.55rem;
+}
+.banner-msg { opacity: 0.9; }
+
+/* ── Maintenance overlay ──────────────────────────────────────────────────── */
+#maintenance-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: var(--bg);
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 1.5rem;
+  text-align: center;
+  padding: 2rem;
+}
+#maintenance-overlay.active { display: flex; }
+.maint-icon {
+  font-size: 3rem;
+  animation: spin 8s linear infinite;
+}
+.maint-title {
+  font-family: var(--font-sans);
+  font-size: clamp(1.5rem, 4vw, 2.5rem);
+  font-weight: 800;
+  color: #fff;
+}
+[data-theme="light"] .maint-title { color: #111; }
+.maint-sub {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--muted);
+  letter-spacing: 0.08em;
+  max-width: 420px;
+  line-height: 1.7;
+}
+.maint-env {
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  color: var(--accent);
+  border: 1px solid var(--accent);
+  padding: 0.2em 0.7em;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+/* Offset hero content when banner is visible */
+body.has-banner .hero { padding-top: 108px; }
+body.has-banner section:not(.hero) { scroll-margin-top: 80px; }
+
+/* ── Accessibility ───────────────────────────────────────────────────────── */
+.nav-item:focus-within .dropdown-menu {
+  opacity: 1;
+  pointer-events: all;
+  transform: translateX(-50%) translateY(0);
+}
+.skill-tag:focus {
+  outline: 1px solid var(--accent);
+  color: var(--accent);
+}
+*:focus-visible { outline: 1px solid var(--accent); outline-offset: 2px; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  .typing-cursor { animation: none; opacity: 1; }
+  .hero-avatar::before,
+  .hero-avatar::after { animation: none; }
+  .avatar-scan { animation: none; opacity: 0; }
+}
+
+/* ── Print stylesheet ────────────────────────────────────────────────────── */
+@media print {
+  nav, #site-banner, #maintenance-overlay, #skeleton-overlay,
+  .theme-toggle, .hero-avatar, .hero-actions, footer { display: none !important; }
+  body { background: #fff !important; color: #000 !important; font-size: 11pt; }
+  body::before, body::after { display: none; }
+  .hero { padding-top: 1rem !important; min-height: auto; }
+  .hero-name { color: #000 !important; font-size: 28pt; }
+  .hero-name span { color: #0055aa !important; }
+  .hero-title, .hero-eyebrow { color: #555 !important; }
+  .hero-headline { color: #333 !important; }
+  .stat-num { color: #0055aa !important; }
+  .stat-label { color: #555 !important; }
+  section { padding: 1.5rem 0 !important; max-width: 100%; }
+  .section-title { color: #000 !important; font-size: 16pt; page-break-after: avoid; }
+  .section-label { color: #0055aa !important; }
+  .cs-card, .exp-card, .cert-card, .tool-card, .project-card {
+    background: #fff !important;
+    border: 1px solid #ccc !important;
+    break-inside: avoid;
+    box-shadow: none !important;
+  }
+  .exp-role, .cert-name, .tool-name, .project-name, .cs-title { color: #000 !important; }
+  .cs-metric-value { color: #0055aa !important; }
+  .cs-system { color: #0055aa !important; }
+  .skills-grid { grid-template-columns: repeat(4,1fr) !important; }
+  .skill-tag { background: #f5f5f5 !important; border-color: #ccc !important; color: #333 !important; }
+  a { color: #0055aa !important; text-decoration: underline; }
+  .certs-grid, .projects-grid { grid-template-columns: repeat(2,1fr) !important; }
+}
+
+
+/* ── Email direct hint ───────────────────────────────────────────────────── */
+.contact-email-hint {
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  color: var(--muted);
+  letter-spacing: 0.04em;
+  line-height: 1.6;
+}
+.contact-email-hint a {
+  color: var(--accent);
+  text-decoration: none;
+  transition: opacity 0.2s;
+}
+.contact-email-hint a:hover { opacity: 0.7; text-decoration: underline; }
+
+
+/* ── Session types guide ─────────────────────────────────────────────────── */
+.sessions-section {
+  margin-top: 2.5rem;
+  padding-top: 2rem;
+  border-top: 1px solid var(--border);
+}
+.sessions-title {
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 1.25rem;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+.sessions-title::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+}
+.session-cards {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+.session-card {
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  padding: 1rem 1.25rem;
+  position: relative;
+  overflow: hidden;
+  transition: border-color 0.2s;
+}
+.session-card::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  width: 3px;
+  background: var(--border);
+  transition: background 0.2s;
+}
+.session-card:hover { border-color: rgba(0,229,255,0.25); }
+.session-card:hover::before { background: var(--accent); }
+.session-card.featured { border-color: rgba(0,229,255,0.2); }
+.session-card.featured::before { background: var(--accent); }
+.session-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 0.3rem;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+.session-name {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--text);
+  letter-spacing: 0.05em;
+}
+.session-card.featured .session-name { color: #fff; }
+.session-meta {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-shrink: 0;
+}
+.session-duration {
+  font-family: var(--font-mono);
+  font-size: 0.58rem;
+  color: var(--muted);
+  letter-spacing: 0.06em;
+}
+.session-price {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  font-weight: 700;
+  color: var(--accent2);
+  letter-spacing: 0.04em;
+}
+.session-price.free {
+  color: var(--accent);
+}
+.session-desc {
+  font-size: 0.78rem;
+  color: var(--muted);
+  line-height: 1.55;
+  margin-bottom: 0.4rem;
+}
+.session-window {
+  font-family: var(--font-mono);
+  font-size: 0.58rem;
+  color: var(--accent3);
+  letter-spacing: 0.06em;
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+.session-window::before { content: '⏱'; font-size: 0.6rem; }
+.session-badge {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: 0.52rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 0.12em 0.5em;
+  border-radius: 2px;
+  background: rgba(0,229,255,0.1);
+  border: 1px solid rgba(0,229,255,0.25);
+  color: var(--accent);
+  margin-left: 0.4rem;
+  vertical-align: middle;
+}
+
+/* Calendly / booking CTA */
+.session-cta {
+  margin-top: 1.25rem;
+  display: flex;
+  gap: 0.75rem;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.session-cta-note {
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  color: var(--muted);
+  letter-spacing: 0.04em;
+  line-height: 1.5;
+}
+/* Hidden until calendly URL is set in email.json */
+#calendly-btn { display: none; }
+[data-theme="light"] .session-card { background: #f8fafc; }
+[data-theme="noir"]  .session-card { background: #111; }
+
+
+/* ══════════════════════════════════════════════════════════════════════════
+   CASE STUDIES
+   ══════════════════════════════════════════════════════════════════════════ */
+.cs-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  gap: 1.5rem;
+}
+.cs-card {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  padding: 1.75rem;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  transition: border-color 0.22s, transform 0.22s, box-shadow 0.22s;
+  overflow: hidden;
+}
+/* Left accent bar — matches exp-card pattern */
+.cs-card::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  width: 3px;
+  background: var(--accent);
+  opacity: 0;
+  transition: opacity 0.22s;
+}
+/* Subtle top gradient line — unique to case studies */
+.cs-card::after {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, var(--accent), transparent 70%);
+  opacity: 0;
+  transition: opacity 0.22s;
+}
+.cs-card:hover {
+  border-color: rgba(0,229,255,0.3);
+  transform: translateY(-3px);
+  box-shadow: 0 8px 32px rgba(0,0,0,0.35);
+}
+.cs-card:hover::before { opacity: 1; }
+.cs-card:hover::after  { opacity: 1; }
+
+/* System tag — top label like cert-issuer */
+.cs-system {
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 0.6rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.cs-system-dot {
+  width: 5px; height: 5px;
+  border-radius: 50%;
+  background: var(--accent);
+  flex-shrink: 0;
+}
+
+/* Title */
+.cs-title {
+  font-size: 1.0rem;
+  font-weight: 700;
+  color: #fff;
+  line-height: 1.3;
+  margin-bottom: 1.25rem;
+}
+[data-theme="light"] .cs-title { color: #111a26; }
+[data-theme="noir"]  .cs-title { color: var(--text); }
+
+/* Objective block */
+.cs-block {
+  margin-bottom: 1rem;
+}
+.cs-block-label {
+  font-family: var(--font-mono);
+  font-size: 0.56rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 0.35rem;
+}
+.cs-block-content {
+  font-size: 0.82rem;
+  color: var(--text);
+  line-height: 1.6;
+}
+
+/* Metrics grid */
+.cs-metrics {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  gap: 0.6rem;
+  margin-bottom: 1rem;
+}
+.cs-metric {
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  padding: 0.6rem 0.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  transition: border-color 0.2s;
+}
+.cs-card:hover .cs-metric { border-color: rgba(0,229,255,0.15); }
+.cs-metric-value {
+  font-family: var(--font-mono);
+  font-size: 1.0rem;
+  font-weight: 700;
+  color: var(--accent2);
+  line-height: 1;
+}
+.cs-metric-label {
+  font-family: var(--font-mono);
+  font-size: 0.56rem;
+  color: var(--muted);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  line-height: 1.3;
+}
+
+/* Footer row — date + status badge */
+.cs-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: auto;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border);
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+.cs-date {
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  color: var(--muted);
+  letter-spacing: 0.06em;
+}
+.cs-badge {
+  font-family: var(--font-mono);
+  font-size: 0.54rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 0.15em 0.55em;
+  border-radius: 2px;
+  border: 1px solid;
+}
+.cs-badge.complete  { color: var(--accent2); border-color: rgba(57,255,122,0.3); background: rgba(57,255,122,0.06); }
+.cs-badge.ongoing   { color: var(--accent);  border-color: rgba(0,229,255,0.3);  background: rgba(0,229,255,0.06); }
+.cs-badge.expanding { color: var(--accent3); border-color: rgba(255,140,0,0.3);  background: rgba(255,140,0,0.06); }
+
+/* Theme overrides */
+[data-theme="light"] .cs-card  { background: #fff; }
+[data-theme="light"] .cs-metric { background: #f4f6f9; }
+[data-theme="noir"]  .cs-card  { background: #111; }
+[data-theme="noir"]  .cs-metric { background: #1a1a1a; }
+
+@media (max-width: 768px) {
+  .cs-grid { grid-template-columns: 1fr; }
+  .cs-metrics { grid-template-columns: repeat(2, 1fr); }
+}
+
+/* Print */
+@media print {
+  .cs-card { break-inside: avoid; }
+  .cs-title { color: #000 !important; }
+  .cs-metric-value { color: #0055aa !important; }
+}
+
+
+/* ══════════════════════════════════════════════════════════════════════════
+   RATINGS PANEL — hero overlay, same space as hero content
+   ══════════════════════════════════════════════════════════════════════════ */
+
+/* Toggle trigger — sits below hero buttons, quiet invitation */
+.ratings-trigger {
+  display: none; /* shown by JS when ratings.json enabled:true */
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+  background: none;
+  border: none;
+  border-top: 1px solid var(--border);
+  padding: 0.6rem 0 0;
+  margin-top: 1rem;
+  cursor: pointer;
+  display: none;
+  align-items: center;
+  gap: 0.5rem;
+  transition: color 0.2s;
+  width: 100%;
+  text-align: left;
+}
+.ratings-trigger::before { content: '◎'; color: var(--accent); }
+.ratings-trigger:hover { color: var(--accent); }
+.ratings-trigger.active::before { content: '✕'; }
+
+/* Hero content states */
+.hero-profile {
+  transition: opacity 0.35s ease, filter 0.35s ease;
+}
+.hero-profile.faded {
+  opacity: 0.08;
+  filter: blur(3px);
+  pointer-events: none;
+}
+
+/* Ratings panel — absolutely positioned over hero-inner */
+.ratings-panel {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  /* stretch to cover the full hero-inner including the avatar column */
+  width: 100%;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.35s ease;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 0 0.5rem;
+  overflow-y: auto;
+  background: var(--bg);
+  z-index: 10;
+}
+.ratings-panel.visible {
+  opacity: 1;
+  pointer-events: all;
+}
+
+.ratings-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 1.25rem;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+.ratings-title {
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+.ratings-meta {
+  font-family: var(--font-mono);
+  font-size: 0.56rem;
+  color: var(--muted);
+  letter-spacing: 0.06em;
+  text-align: right;
+  line-height: 1.6;
+}
+
+/* Model column headers */
+.ratings-models {
+  display: grid;
+  grid-template-columns: 1fr repeat(4, 44px) 50px;
+  gap: 0.25rem;
+  margin-bottom: 0.4rem;
+  padding: 0 0.25rem;
+}
+.ratings-model-label {
+  font-family: var(--font-mono);
+  font-size: 0.52rem;
+  color: var(--muted);
+  letter-spacing: 0.06em;
+  text-align: center;
+  text-transform: uppercase;
+}
+.ratings-model-label:first-child { text-align: left; }
+
+/* Each role row */
+.ratings-row {
+  display: grid;
+  grid-template-columns: 1fr repeat(4, 44px) 50px;
+  gap: 0.25rem;
+  padding: 0.5rem 0.25rem;
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+  align-items: center;
+  transition: background 0.15s;
+  border-radius: 2px;
+}
+.ratings-row:hover { background: rgba(0,229,255,0.03); }
+.ratings-role-name {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  color: var(--text);
+  letter-spacing: 0.03em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.ratings-score {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  font-weight: 700;
+  text-align: center;
+  border-radius: 2px;
+  padding: 0.15em 0;
+}
+.ratings-score.high   { color: var(--accent2); }
+.ratings-score.mid    { color: var(--accent3); }
+.ratings-score.low    { color: var(--muted); }
+.ratings-score.none   { color: var(--muted); opacity: 0.4; font-weight: 400; }
+.ratings-salary {
+  font-family: var(--font-mono);
+  font-size: 0.56rem;
+  color: var(--muted);
+  text-align: right;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+}
+
+/* Footer note */
+.ratings-footer {
+  margin-top: 0.75rem;
+  font-family: var(--font-mono);
+  font-size: 0.55rem;
+  color: var(--muted);
+  letter-spacing: 0.04em;
+  line-height: 1.6;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+.ratings-footer a {
+  color: var(--accent);
+  text-decoration: none;
+}
+.ratings-footer a:hover { text-decoration: underline; }
+
+/* Hero wrapper needs position:relative for absolute panel */
+.hero-inner { position: relative; }
+
+/* Avatar fades when ratings panel opens */
+.hero-avatar {
+  transition: opacity 0.35s ease;
+}
+.hero-avatar.faded {
+  opacity: 0.08;
+  pointer-events: none;
+}
+
+/* Theme overrides */
+[data-theme="light"] .ratings-row:hover { background: rgba(0,102,204,0.04); }
+[data-theme="noir"]  .ratings-row:hover { background: rgba(122,154,184,0.04); }
+[data-theme="light"] .ratings-panel { background: transparent; }
+
+@media (max-width: 768px) {
+  .ratings-models { grid-template-columns: 1fr repeat(4, 36px); }
+  .ratings-row    { grid-template-columns: 1fr repeat(4, 36px); }
+  .ratings-salary { display: none; }
+  .ratings-model-label:last-child { display: none; }
+  .ratings-role-name { font-size: 0.58rem; }
+}
+
 </style>
+
+<!-- ── SEO + Social preview ───────────────────────────────────────────── -->
+<meta name="description" content="Billy Gordon — Endpoint Automation Engineer. Intune, Autopilot, PowerShell automation, self-hosted infrastructure. South Carolina, available for freelance."/>
+<meta name="author"      content="Billy Gordon"/>
+<meta name="robots"      content="index, follow"/>
+<meta property="og:title"       content="Billy Gordon · Endpoint Automation Engineer"/>
+<meta property="og:description" content="Endpoint automation across 1,500 devices and 70 sites. Intune, Autopilot, PowerShell, self-hosted infrastructure. Available for freelance engagements."/>
+<meta property="og:image"       content="https://william112792.github.io/preview.png"/>
+<meta property="og:image:width" content="1200"/>
+<meta property="og:image:height"content="630"/>
+<meta property="og:url"         content="https://william112792.github.io/"/>
+<meta property="og:type"        content="website"/>
+<meta property="og:site_name"   content="Billy Gordon Portfolio"/>
+<meta name="twitter:card"       content="summary_large_image"/>
+<meta name="twitter:title"      content="Billy Gordon · Endpoint Automation Engineer"/>
+<meta name="twitter:description"content="Endpoint automation across 1,500 devices and 70 sites. Available for freelance."/>
+<meta name="twitter:image"      content="https://william112792.github.io/preview.png"/>
+<link rel="canonical"           href="https://william112792.github.io/"/>
 </head>
+<body>
 
-<!-- The Body Begins -->
-<body class="w3-light-grey">
-
-<!-- Script for banner -->
-<script>
-  (function () {
-    fetch('./banner.json')
-      .then(function (r) { return r.json(); })
-      .then(function (cfg) {
-        if (!cfg || cfg.enabled === false) return;
-        var colors = {
-          github: { bg: '#1a1a2e', text: '#c8c8e0', pillBg: '#3c3489', pillText: '#cecbf6' },
-          prod:   { bg: '#0f2d1a', text: '#b6e4c6', pillBg: '#1d9e75', pillText: '#e1f5ee' },
-          qa:     { bg: '#2d1f00', text: '#f5d99a', pillBg: '#ba7517', pillText: '#faeeda' },
-          test:   { bg: '#1a0d0d', text: '#f0b0b0', pillBg: '#a32d2d', pillText: '#fcebeb' }
-        };
-        var c = colors[cfg.env] || colors.github;
-        var banner = document.createElement('div');
-        banner.id = 'env-banner';
-        banner.style.cssText = [
-          'display:flex', 'align-items:center', 'gap:10px',
-          'padding:8px 16px', 'font-family:sans-serif', 'font-size:13px',
-          'background:' + c.bg, 'color:' + c.text,
-          'position:sticky', 'top:0', 'z-index:9999',
-          'border-bottom:1px solid rgba(255,255,255,0.08)'
-        ].join(';');
-        var pill = document.createElement('span');
-        pill.textContent = cfg.env.toUpperCase();
-        pill.style.cssText = [
-          'font-size:11px', 'font-weight:600', 'padding:2px 10px',
-          'border-radius:20px', 'letter-spacing:0.04em',
-          'background:' + c.pillBg, 'color:' + c.pillText
-        ].join(';');
-        var msg = document.createElement('span');
-        msg.textContent = cfg.message || '';
-        msg.style.cssText = 'font-size:12px;opacity:0.85';
-        banner.appendChild(pill);
-        banner.appendChild(msg);
-        document.body.insertBefore(banner, document.body.firstChild);
-      })
-      .catch(function () {});
-  })();
-</script>
-
-<div class="w3-content w3-margin-top" style="max-width:1400px;">
-<div class="w3-row-padding">
-
-<!-- LEFT COLUMN -->
-<div class="w3-third">
-
-<div class="w3-white w3-text-grey w3-card-4">
-<div class="w3-display-container">
-<img src="./avatar_hat.png" style="width:100%" alt="Avatar">
-<div class="w3-display-bottomleft w3-container w3-text-black">
-<h2><span class="w3-tag w3-teal w3-round">Billy Gordon</span></h2>
-</div>
+<!-- ── Skeleton loader ───────────────────────────────────────────────────── -->
+<div id="skeleton-overlay">
+  <div class="sk-nav">
+    <div class="sk-block" style="width:120px;height:12px;"></div>
+    <div class="sk-block" style="width:280px;height:10px;margin-left:auto;"></div>
+  </div>
+  <div class="sk-hero">
+    <div class="sk-hero-text">
+      <div class="sk-block" style="width:100px;height:10px;"></div>
+      <div class="sk-block" style="width:300px;height:52px;margin-top:0.5rem;"></div>
+      <div class="sk-block" style="width:220px;height:14px;"></div>
+      <div class="sk-block" style="width:440px;height:60px;max-width:90%;margin-top:0.25rem;"></div>
+      <div style="display:flex;gap:2rem;margin-top:0.5rem;">
+        <div class="sk-block" style="width:60px;height:44px;"></div>
+        <div class="sk-block" style="width:60px;height:44px;"></div>
+        <div class="sk-block" style="width:60px;height:44px;"></div>
+        <div class="sk-block" style="width:60px;height:44px;"></div>
+      </div>
+      <div style="display:flex;gap:1rem;margin-top:0.5rem;">
+        <div class="sk-block" style="width:140px;height:38px;"></div>
+        <div class="sk-block" style="width:110px;height:38px;"></div>
+      </div>
+    </div>
+    <div class="sk-block sk-avatar"></div>
+  </div>
 </div>
 
-<div class="w3-container">
-
-<p><i class="fa fa-briefcase fa-fw w3-margin-right w3-large w3-text-teal"></i>Endpoint Automation Engineer</p>
-<p><i class="fa fa-home fa-fw w3-margin-right w3-large w3-text-teal"></i>South Carolina (Remote)</p>
-<p><i class="fa fa-github fa-fw w3-margin-right w3-large w3-text-teal"></i>
-<a href="https://github.com/william112792" target="_blank">GitHub Portfolio</a></p>
-
-<hr>
-
-<!-- SKILLS -->
-<p class="w3-large"><b><i class="fa fa-asterisk fa-fw w3-margin-right w3-text-teal"></i>Core Skills</b></p>
-
-<p>Microsoft Intune / Endpoint Management</p>
-<div class="w3-light-grey w3-round-xlarge"><div class="w3-teal w3-round-xlarge" style="height:20px;width:95%"></div></div>
-
-<p>Windows Autopilot (Zero-Touch Provisioning)</p>
-<div class="w3-light-grey w3-round-xlarge"><div class="w3-teal w3-round-xlarge" style="height:20px;width:90%"></div></div>
-
-<p>PowerShell Automation & Remediation</p>
-<div class="w3-light-grey w3-round-xlarge"><div class="w3-teal w3-round-xlarge" style="height:20px;width:95%"></div></div>
-
-<p>Workflow Automation (Power Automate)</p>
-<div class="w3-light-grey w3-round-xlarge"><div class="w3-teal w3-round-xlarge" style="height:20px;width:90%"></div></div>
-
-<p>AI-Assisted IT Operations</p>
-<div class="w3-light-grey w3-round-xlarge"><div class="w3-teal w3-round-xlarge" style="height:20px;width:85%"></div></div>
-
-<br>
-
-<!-- TECH STACK -->
-<p class="w3-large"><b><i class="fa fa-cogs fa-fw w3-margin-right w3-text-teal"></i>Tech Stack</b></p>
-<p>PowerShell, Intune, Autopilot, Power Automate, Azure AD, AI Tools</p>
-
-<hr>
-
-<!-- PORTFOLIO QUICK LINKS -->
-<p class="w3-large"><b><i class="fa fa-github fa-fw w3-margin-right w3-text-teal"></i>Portfolio</b></p>
-
-<p><a href="https://github.com/william112792/layered-infrastructure-lab" target="_blank">Layered Infrastructure Lab</a></p>
-<p><a href="https://github.com/william112792/endpoint-automation-platform" target="_blank">Endpoint Automation Platform</a></p>
-<p><a href="https://github.com/william112792/intune-remediation-scripts" target="_blank">Intune Remediation Scripts</a></p>
-<p><a href="https://github.com/william112792/autopilot-deployment-lab" target="_blank">Autopilot Deployment Lab</a></p>
-<p><a href="https://github.com/william112792/ai-log-analysis-toolkit" target="_blank">AI Log Analysis Toolkit</a></p>
-
-<br>
-
-</div>
+<!-- ── Maintenance overlay (maintenance.json) ────────────────────────────── -->
+<div id="maintenance-overlay">
+  <div class="maint-icon">⚙</div>
+  <div class="maint-title">Down for Maintenance</div>
+  <p class="maint-sub">This site is temporarily unavailable while updates are being applied. Please check back shortly.</p>
+  <div class="maint-env" id="maint-env-tag">maintenance</div>
 </div>
 
-<br>
+<!-- ── Environment banner (banner.json) ──────────────────────────────────── -->
+<!--
+  banner.json format:
+  { "enabled": true, "env": "github|prod|qa|test", "message": "your message" }
 
+  env colours:
+    github → cyan   (canonical / stable)
+    prod   → green  (live environment)
+    qa     → amber  (under review)
+    test   → red    (experimental)
+-->
+<div id="site-banner">
+  <span class="banner-env-tag" id="banner-env-tag"></span>
+  <span class="banner-msg"    id="banner-msg"></span>
+  <span class="banner-updated" id="banner-updated" style="display:none;opacity:0.6;margin-left:0.5rem;"></span>
 </div>
 
-<!-- RIGHT COLUMN -->
-<div class="w3-twothird">
+<!-- ── Navigation ─────────────────────────────────────────────────────────── -->
+<nav>
+  <a href="#" class="nav-logo">Billy Gordon</a>
 
-<!-- Physical Copy -->
-<div class="w3-container w3-card w3-white w3-margin-bottom w3-padding-large">
-<div class="w3-row">
-<div class="w3-col m8">
-<h4 class="w3-opacity" style="margin-top: 10px;"><b>Need a physical copy?</b></h4>
-</div>
-<div class="w3-col m4">
-<a href="https://github.com/William112792/William112792.github.io/blob/main/resume/Resume_WilliamGordon.pdf?raw=true" download="Resume_WilliamGordon.pdf" class="w3-button w3-teal w3-block w3-round-large download-btn">
-<i class="fa fa-download w3-margin-right"></i> Download PDF
-</a>
-</div>
-</div>
-</div>
-
-<!-- Headline -->
-<div class="w3-container w3-card w3-white w3-margin-bottom">
-<h2 class="w3-text-grey w3-padding-16">
-<i class="fa fa-rocket fa-fw w3-margin-right w3-xxlarge w3-text-teal"></i>Headline
-</h2>
-<div class="w3-container">
-<p>
-Delivered enterprise-scale endpoint automation across 1,500 devices and 70 sites, reducing non-compliance to &lt;0.1% and onboarding effort by ~90%.
-</p>
-<br>
-</div>
-</div>
-  
-<!-- SUMMARY -->
-<div class="w3-container w3-card w3-white w3-margin-bottom">
-<h2 class="w3-text-grey w3-padding-16">
-<i class="fa fa-user fa-fw w3-margin-right w3-xxlarge w3-text-teal"></i>Summary
-</h2>
-<p>
-Endpoint Automation Engineer with 12+ years of experience building scalable Windows endpoint environments.
-Specializing in Intune, Autopilot, PowerShell automation, and AI-driven IT operations.
-Focused on eliminating manual processes through zero-touch provisioning, remediation frameworks,
-and workflow-driven system integration.
-</p>
-</div>
-
-<!-- EXPERIENCE -->
-<div class="w3-container w3-card w3-white w3-margin-bottom">
-<h2 class="w3-text-grey w3-padding-16">
-<i class="fa fa-suitcase fa-fw w3-margin-right w3-xxlarge w3-text-teal"></i>Experience
-</h2>
-
-<div class="w3-container">
-<h5 class="w3-opacity"><b>Endpoint Automation Engineer / Avita Pharmacy</b></h5>
-<h6 class="w3-text-teal">
-<i class="fa fa-calendar fa-fw w3-margin-right"></i>Dec 2014 - 
-<span class="w3-tag w3-teal w3-round">Current</span>
-</h6>
-
-<ul>
-<li>Architected zero-touch provisioning using Autopilot + Intune</li>
-<li>Built PowerShell remediation framework for endpoint compliance</li>
-<li>Automated onboarding/offboarding via Power Automate + HR systems</li>
-<li>Developed scripts for reporting, data correction, and user provisioning</li>
-<li>Leveraged AI tools to analyze logs, detect trends, and generate reports</li>
-<li>Reduced ticket volume by converting recurring issues into automation</li>
-<li>Scaled endpoint systems across multiple company mergers</li>
-</ul>
-
-<hr>
-</div>
-</div>
-
-<!-- PORTFOLIO DETAIL -->
-<div class="w3-container w3-card w3-white w3-margin-bottom">
-<h2 class="w3-text-grey w3-padding-16">
-<i class="fa fa-code fa-fw w3-margin-right w3-xxlarge w3-text-teal"></i>Project Portfolio
-</h2>
-
-<div class="w3-container repo-card" onclick="window.open('https://github.com/william112792/endpoint-automation-platform')">
-<h5><b>Endpoint Automation Platform</b></h5>
-<p>End-to-end system for Intune, Autopilot, automation workflows, and AI-driven operations.</p>
-<hr>
-</div>
-
-<div class="w3-container repo-card" onclick="window.open('https://github.com/william112792/intune-remediation-scripts')">
-<h5><b>Intune Remediation Scripts</b></h5>
-<p>Reusable PowerShell detection and remediation scripts for endpoint compliance.</p>
-<hr>
-</div>
-
-<div class="w3-container repo-card" onclick="window.open('https://github.com/william112792/layered-infrastructure-lab')">
-<h5><b>Layered Infrastructure Lab</b></h5>
-<p>Lab demonstration of layered infrastructure across network, systems, and application areas for service management.</p>
-<hr>
-</div>
-
-<div class="w3-container repo-card" onclick="window.open('https://github.com/william112792/autopilot-deployment-lab')">
-<h5><b>Autopilot Deployment Lab</b></h5>
-<p>Lab demonstration of Autopilot deployment utilizing group tags and automation for zero-touch provisioning.</p>
-<hr>
-</div>
-  
-<div class="w3-container repo-card" onclick="window.open('https://github.com/william112792/ai-log-analysis-toolkit')">
-<h5><b>AI Log Analysis Toolkit</b></h5>
-<p>AI-powered log analysis, trend detection, and executive reporting workflows.</p>
-<hr>
-</div>
-
-</div>
-
-<!-- EDUCATION -->
-<div class="w3-container w3-card w3-white">
-<h2 class="w3-text-grey w3-padding-16">
-<i class="fa fa-certificate fa-fw w3-margin-right w3-xxlarge w3-text-teal"></i>Education
-</h2>
-
-<div class="w3-container">
-<h5 class="w3-opacity"><b>Midlands Technical College</b></h5>
-<p>Associate Degree — Network Systems Management</p>
-<hr>
-</div>
-
-</div>
-
-<!-- VISUALIZATION -->
-<div class="w3-container w3-card w3-white w3-margin-top">
-<h2 class="w3-text-grey w3-padding-16">
-<i class="fa fa-sitemap fa-fw w3-margin-right w3-xxlarge w3-text-teal"></i>Visualization
-</h2>
-
-<div class="w3-container">
-<img src="https://github.com/William112792/layered-infrastructure-lab/blob/main/diagrams/architecture.png?raw=true" style="width:100%; border-radius:4px;" alt="Architecture Diagram">
-</div>
-
-<p class="w3-padding-16">
-Layered infrastructure architecture demonstrating virtualization, storage segmentation, container orchestration,
-and reverse proxy routing. Built to showcase scalable system design and real-world service isolation.
-</p>
-
-</div>
-  
-<!-- UPTIME MONITOR -->
-<div class="w3-container w3-card w3-white w3-margin-top">
-  <h2 class="w3-text-grey w3-padding-16">
-    <i class="fa fa-line-chart fa-fw w3-margin-right w3-xxlarge w3-text-teal"></i>Uptime Monitoring
-  </h2>
-
-  <div class="w3-container">
-    <img src="./uptime-dashboard.png" style="width:100%; border-radius:4px;">
+  <!-- ── Theme toggle — visible at all breakpoints ── -->
+  <div class="theme-toggle" id="theme-toggle" style="margin-left:auto;margin-right:0.5rem;">
+    <button class="theme-btn" data-theme="light"  onclick="setTheme('light')"  title="Light mode">☀ Light</button>
+    <button class="theme-btn active" data-theme="cyber" onclick="setTheme('cyber')" title="Cyber (default)">◉ Cyber</button>
+    <button class="theme-btn" data-theme="noir"   onclick="setTheme('noir')"   title="Noir dark">● Noir</button>
   </div>
 
-<p class="w3-padding-16">
-  Live monitoring dashboard:
-  <a href="https://stats.uptimerobot.com/T46iaEZJ9M" target="_blank">
-    View Uptime Status
-  </a>
-</p>
+  <!-- Sound toggle — sits separately so it stays visible on mobile too -->
+  <button class="sound-toggle active" id="sound-toggle" onclick="toggleSound()" title="Toggle interaction sounds" aria-label="Toggle sounds" style="margin-right:1rem;">
+    <span class="sound-on">♪</span>
+    <span class="sound-off" style="display:none;">♪̶</span>
+  </button>
+
+  <button class="hamburger" id="hamburger" aria-label="Menu" onclick="toggleNav()">
+    <span></span><span></span><span></span>
+  </button>
+
+  <ul class="nav-links" id="nav-links">
+
+    <!-- Skills — no dropdown -->
+    <li class="nav-item no-arrow"><a href="#skills">Skills</a></li>
+
+    <!-- Experience — no dropdown -->
+    <li class="nav-item no-arrow"><a href="#experience">Experience</a></li>
+
+    <!-- Certs — dropdown with verify links -->
+    <!-- TO ADD A CERT: duplicate a <a class="dropdown-item"> block below -->
+    <li class="nav-item" onclick="toggleMobileDropdown(this)">
+      <a href="#certifications">Certs</a>
+      <div class="dropdown-menu">
+        <a class="dropdown-item" href="https://learn.microsoft.com/api/credentials/share/en-us/WilliamGordon-1127/749FF04758DCEBF9?sharingId=AD1E4B2491808081" target="_blank" rel="noopener">
+          <span class="dropdown-item-name">Endpoint Administrator</span>
+          <span class="dropdown-item-meta">Microsoft · Associate</span>
+          <span class="dropdown-item-code">MD-102</span>
+          <span class="dropdown-verify">✓ Verify credential →</span>
+        </a>
+        <a class="dropdown-item" href="#certifications" onclick="closeNav()">
+          <span class="dropdown-item-name">Network Systems Management</span>
+          <span class="dropdown-item-meta">Midlands Technical College · Associate Degree</span>
+          <!-- Add verify link when available: <span class="dropdown-verify">✓ Verify →</span> -->
+        </a>
+        <a class="dropdown-item" href="#certifications" onclick="closeNav()">
+          <span class="dropdown-item-name">Networking Specialist</span>
+          <span class="dropdown-item-meta">Midlands Technical College · Certificate</span>
+          <!-- Add verify link when available: <span class="dropdown-verify">✓ Verify →</span> -->
+        </a>
+        <a class="dropdown-item" href="#certifications" onclick="closeNav()">
+          <span class="dropdown-item-name">LAN Networking Systems</span>
+          <span class="dropdown-item-meta">Midlands Technical College · Certificate</span>
+        </a>
+        <a class="dropdown-item" href="#certifications" onclick="closeNav()">
+          <span class="dropdown-item-name">Routing and Networking Configuration</span>
+          <span class="dropdown-item-meta">Midlands Technical College · Certificate</span>
+        </a>
+        <a class="dropdown-item" href="#certifications" onclick="closeNav()">
+            <span class="dropdown-item-name">Information Systems Technology</span>
+          <span class="dropdown-item-meta">Midlands Technical College · Certificate</span>
+        </a>
+      </div>
+    </li>
+
+    <!-- Live Tools — dropdown -->
+    <!-- TO ADD A TOOL: duplicate a <a class="dropdown-item"> block below -->
+    <li class="nav-item" onclick="toggleMobileDropdown(this)">
+      <a href="#tools">Live Tools</a>
+      <div class="dropdown-menu">
+        <a class="dropdown-item" href="https://ipme.dmsk.duckdns.org/" target="_blank" rel="noopener">
+          <span class="dropdown-item-name">ip-saas</span>
+          <span class="dropdown-item-meta">Public IP lookup API · Live</span>
+        </a>
+        <a class="dropdown-item" href="https://uptime.dmsk.duckdns.org/" target="_blank" rel="noopener">
+          <span class="dropdown-item-name">uptime-saas</span>
+          <span class="dropdown-item-meta">Uptime monitoring dashboard · Live</span>
+        </a>
+      </div>
+    </li>
+
+    <!-- Projects — dropdown -->
+    <!-- TO ADD A PROJECT: duplicate a <a class="dropdown-item"> block below -->
+    <li class="nav-item" onclick="toggleMobileDropdown(this)">
+      <a href="#projects">Projects</a>
+      <div class="dropdown-menu">
+        <a class="dropdown-item" href="https://github.com/william112792/endpoint-automation-platform" target="_blank" rel="noopener">
+          <span class="dropdown-item-name">Endpoint Automation Platform</span>
+          <span class="dropdown-item-meta">Intune · Autopilot · PowerShell</span>
+        </a>
+        <a class="dropdown-item" href="https://github.com/william112792/intune-remediation-scripts" target="_blank" rel="noopener">
+          <span class="dropdown-item-name">Intune Remediation Scripts</span>
+          <span class="dropdown-item-meta">PowerShell · Endpoint Compliance</span>
+        </a>
+        <a class="dropdown-item" href="https://github.com/william112792/layered-infrastructure-lab" target="_blank" rel="noopener">
+          <span class="dropdown-item-name">Layered Infrastructure Lab</span>
+          <span class="dropdown-item-meta">Networking · Docker · Virtualization</span>
+        </a>
+        <a class="dropdown-item" href="https://github.com/william112792/autopilot-deployment-lab" target="_blank" rel="noopener">
+          <span class="dropdown-item-name">Autopilot Deployment Lab</span>
+          <span class="dropdown-item-meta">Autopilot · Zero-Touch</span>
+        </a>
+        <a class="dropdown-item" href="https://github.com/william112792/ai-log-analysis-toolkit" target="_blank" rel="noopener">
+          <span class="dropdown-item-name">AI Log Analysis Toolkit</span>
+          <span class="dropdown-item-meta">AI · Log Analysis · Reporting</span>
+        </a>
+      </div>
+    </li>
+
+    <!-- Contact — no dropdown -->
+    <li class="nav-item no-arrow"><a href="#contact" onclick="closeNav()">Contact</a></li>
+
+    <!-- Case Studies — no dropdown -->
+    <li class="nav-item no-arrow"><a href="#casestudies" onclick="closeNav()">Case Studies</a></li>
+
+    <!-- Resume — no dropdown -->
+    <li class="nav-item no-arrow">
+      <a href="https://github.com/William112792/William112792.github.io/blob/main/resume/Resume_WilliamGordon.pdf?raw=true" target="_blank">Resume</a>
+    </li>
+
+  </ul>
+</nav>
+
+<!-- ── Hero ───────────────────────────────────────────────────────────────── -->
+<section class="hero" id="top">
+  <div class="hero-inner">
+    <div class="hero-profile" id="hero-profile">
+      <div class="hero-eyebrow" id="freelance-badge" style="display:none">· Available for freelance engagements ·</div>
+      <h1 class="hero-name">Billy<br/><span>Gordon</span></h1>
+      <div class="hero-title"><span id="typed-title"></span><span class="typing-cursor" id="typing-cursor"></span></div>
+      <p class="hero-headline">
+        Delivered enterprise-scale endpoint automation across 1,500 devices and 70 sites —
+        reducing non-compliance to &lt;0.1% and onboarding effort by ~90%.
+      </p>
+      <div class="hero-stats">
+        <div class="stat">
+          <span class="stat-num" data-final="12+" id="stat-0">12+</span>
+          <span class="stat-label">Years experience</span>
+        </div>
+        <div class="stat">
+          <span class="stat-num" data-final="1,500" id="stat-1">1,500</span>
+          <span class="stat-label">Devices managed</span>
+        </div>
+        <div class="stat">
+          <span class="stat-num" data-final="70" id="stat-2">70</span>
+          <span class="stat-label">Sites deployed</span>
+        </div>
+        <div class="stat">
+          <span class="stat-num" data-final="<0.1%" id="stat-3">&lt;0.1%</span>
+          <span class="stat-label">Non-compliance</span>
+        </div>
+      </div>
+      <div class="hero-actions">
+        <a href="https://github.com/William112792/William112792.github.io/blob/main/resume/Resume_WilliamGordon.pdf?raw=true" class="btn-primary" target="_blank">Download Resume</a>
+        <a href="https://www.linkedin.com/in/william-gordon-8113b159/" class="btn-ghost" target="_blank">LinkedIn →</a>
+        <a href="https://github.com/william112792" class="btn-ghost" target="_blank">GitHub →</a>
+      </div>
+
+      <!-- Ratings trigger — shown by JS when ratings.json enabled:true -->
+      <button class="ratings-trigger" id="ratings-trigger" onclick="toggleRatings()" style="display:none">
+        View AI Evaluation →
+      </button>
+    </div>
+
+    <div class="hero-avatar">
+      <img src="https://william112792.github.io/avatar_hat.png" alt="Billy Gordon"/>
+      <div class="avatar-clip">
+        <div class="avatar-scan"></div>
+      </div>
+    </div>
+  
+    <!-- Ratings panel — direct child of hero-inner, covers full width including avatar -->
+    <div class="ratings-panel" id="ratings-panel">
+      <div class="ratings-header">
+        <div>
+          <div class="ratings-title">◎ Independent AI Evaluation</div>
+        </div>
+        <div class="ratings-meta">
+          <span id="ratings-date">—</span><br/>
+          <span id="ratings-source">—</span>
+        </div>
+      </div>
+      <div class="ratings-models">
+        <div class="ratings-model-label">Role</div>
+        <div class="ratings-model-label">Claude</div>
+        <div class="ratings-model-label">GPT</div>
+        <div class="ratings-model-label">Gemini</div>
+        <div class="ratings-model-label">Deep&shy;Seek</div>
+        <div class="ratings-model-label">Salary Mid</div>
+      </div>
+      <div id="ratings-rows"></div>
+      <div class="ratings-footer">
+        <span id="ratings-methodology">—</span>
+        <button onclick="toggleRatings()"
+          style="font-family:var(--font-mono);font-size:0.55rem;background:none;
+                 border:none;color:var(--accent);cursor:pointer;letter-spacing:0.06em;">
+          ← Back to profile
+        </button>
+      </div>
+    </div>
 </div>
+</section>
 
-</div>
-</div>
+<!-- ── Skills ─────────────────────────────────────────────────────────────── -->
+<section id="skills">
+  <div class="section-label">01 — Core Competencies</div>
+  <h2 class="section-title">Skills & Stack</h2>
+  <div class="skills-grid">
+    <div class="skill-tag reveal reveal-delay-1">Microsoft Intune</div>
+    <div class="skill-tag reveal reveal-delay-1">Windows Autopilot</div>
+    <div class="skill-tag reveal reveal-delay-2">PowerShell Automation</div>
+    <div class="skill-tag reveal reveal-delay-2">Power Automate</div>
+    <div class="skill-tag reveal reveal-delay-3">Azure AD / Entra ID</div>
+    <div class="skill-tag reveal reveal-delay-3">Zero-Touch Provisioning</div>
+    <div class="skill-tag reveal reveal-delay-4">AI-Assisted IT Operations</div>
+    <div class="skill-tag reveal reveal-delay-4">Endpoint Compliance</div>
+    <div class="skill-tag reveal reveal-delay-5">Node.js / Express</div>
+    <div class="skill-tag reveal reveal-delay-5">PostgreSQL</div>
+    <div class="skill-tag reveal reveal-delay-6">Docker / Dockge</div>
+    <div class="skill-tag reveal reveal-delay-6">nginx Reverse Proxy</div>
+    <div class="skill-tag reveal reveal-delay-1">OIDC / SAML SSO</div>
+    <div class="skill-tag reveal reveal-delay-2">DNS Management</div>
+    <div class="skill-tag reveal reveal-delay-3">Workflow Automation</div>
+    <div class="skill-tag reveal reveal-delay-4">Self-Hosted Infrastructure</div>
+  </div>
+</section>
 
-<footer class="w3-container w3-teal w3-center w3-margin-top">
-<p>Connect with me</p>
+<!-- ── Experience ─────────────────────────────────────────────────────────── -->
+<section id="experience">
+  <div class="section-label">02 — Professional History</div>
+  <h2 class="section-title">Experience</h2>
+  <div class="exp-card reveal">
+    <div class="exp-role">Endpoint Automation Engineer</div>
+    <div class="exp-company">Avita Pharmacy</div>
+    <div class="exp-period">Dec 2014 — Present · 11+ years</div>
+    <ul class="exp-bullets">
+      <li>Architected zero-touch provisioning across 1,500 devices and 70 sites using Autopilot + Intune</li>
+      <li>Built PowerShell remediation framework reducing non-compliance from industry average to &lt;0.1%</li>
+      <li>Automated onboarding and offboarding via Power Automate integrated with HR systems</li>
+      <li>Scaled endpoint systems across multiple company mergers with zero service disruption</li>
+      <li>Leveraged AI tools to analyze logs, detect trends, and generate executive reports</li>
+      <li>Reduced ticket volume by converting recurring issues into automated remediation workflows</li>
+      <li>Cut manual onboarding effort by approximately 90% through zero-touch deployment pipelines</li>
+    </ul>
+  </div>
+</section>
 
-<a href="https://github.com/william112792" target="_blank"><i class="fa fa-github w3-hover-opacity"></i></a>
-<a href="https://www.linkedin.com/in/william-gordon-8113b159/" target="_blank"><i class="fa fa-linkedin-square w3-hover-opacity"></i></a>
+<!-- ── Certifications & Education ─────────────────────────────────────────── -->
+<section id="certifications">
+  <div class="section-label">03 — Credentials</div>
+  <h2 class="section-title">Certifications & Education</h2>
+  <div class="certs-grid">
 
-<p>Built for scalable portfolio growth • Hosted on GitHub</p>
+    <!-- Microsoft MD-102 -->
+    <div class="cert-card reveal reveal-delay-1">
+      <div class="cert-issuer">Microsoft</div>
+      <div class="cert-name">Endpoint Administrator</div>
+      <a class="cert-verify" href="https://learn.microsoft.com/api/credentials/share/en-us/WilliamGordon-1127/749FF04758DCEBF9?sharingId=AD1E4B2491808081" target="_blank" rel="noopener">
+        ✓ Verify credential →
+      </a>
+      <div class="cert-footer">
+        <span class="cert-date">2024</span>
+        <span class="cert-level">Associate</span>
+        <span class="cert-code">MD-102</span>
+      </div>
+    </div>
+
+    <!-- Degree -->
+    <div class="cert-card reveal reveal-delay-4">
+      <div class="cert-issuer">Midlands Technical College</div>
+      <div class="cert-name">Network Systems Management</div>
+      <!-- Verification if applicable -->
+      <div class="cert-footer">
+        <span class="cert-date">Graduated 2016</span>
+        <span class="cert-level">Associate Degree</span>
+      </div>
+    </div>
+
+    <!-- Certificate -->
+    <div class="cert-card reveal reveal-delay-4">
+      <div class="cert-issuer">Midlands Technical College</div>
+      <div class="cert-name">Networking Specialist</div>
+      <!-- Verification if applicable -->
+      <div class="cert-footer">
+        <span class="cert-date">Awarded 2015</span>
+        <span class="cert-level">Certificate</span>
+      </div>
+    </div>
+
+    <!-- Certificate -->
+    <div class="cert-card reveal reveal-delay-4">
+      <div class="cert-issuer">Midlands Technical College</div>
+      <div class="cert-name">LAN Networking Systems</div>
+      <!-- Verification if applicable -->
+      <div class="cert-footer">
+        <span class="cert-date">Awarded 2016</span>
+        <span class="cert-level">Certificate</span>
+      </div>
+    </div>
+
+    <!-- Certificate -->
+    <div class="cert-card reveal reveal-delay-4">
+      <div class="cert-issuer">Midlands Technical College</div>
+      <div class="cert-name">Routing And Networking Configuration</div>
+      <!-- Verification if applicable -->
+      <div class="cert-footer">
+        <span class="cert-date">Awarded 2015</span>
+        <span class="cert-level">Certificate</span>
+      </div>
+    </div>
+
+    <!-- Certificate -->
+    <div class="cert-card reveal reveal-delay-4">
+      <div class="cert-issuer">Midlands Technical College</div>
+      <div class="cert-name">Information Systems Technology</div>
+      <!-- Verification if applicable -->
+      <div class="cert-footer">
+        <span class="cert-date">Awarded 2016</span>
+        <span class="cert-level">Certificate</span>
+      </div>
+    </div>
+
+  </div>
+  <p style="font-family:var(--font-mono);font-size:0.65rem;color:var(--muted);margin-top:1.5rem;letter-spacing:0.05em;">
+    <!-- * Update cert dates and add additional Microsoft certs as needed — MD-102, SC-300, MS-700 etc. -->
+  </p>
+</section>
+
+<!-- ── Live Tools ─────────────────────────────────────────────────────────── -->
+<section id="tools">
+  <div class="section-label">04 — Live Deployments</div>
+  <h2 class="section-title">Self-Built & Self-Hosted</h2>
+  <div class="tools-grid">
+
+    <div class="tool-card reveal reveal-delay-1">
+      <div class="tool-status"><span class="tool-status-dot"></span>Live</div>
+      <div class="tool-name">ip-saas</div>
+      <div class="tool-desc">
+        Lightweight public IP lookup API. Clean UI, JSON / plain-text / JSONP endpoints.
+        Self-hosted on home hardware behind nginx. Matches the design language of uptime-saas.
+      </div>
+      <div class="tool-tags">
+        <span class="tool-tag">Node.js</span>
+        <span class="tool-tag">Express</span>
+        <span class="tool-tag">Docker</span>
+        <span class="tool-tag">nginx</span>
+      </div>
+      <a href="https://ipme.dmsk.duckdns.org/" class="project-link" target="_blank">Visit live →</a>
+    </div>
+
+    <div class="tool-card reveal reveal-delay-2">
+      <div class="tool-status"><span class="tool-status-dot"></span>Live</div>
+      <div class="tool-name">uptime-saas</div>
+      <div class="tool-desc">
+        Full uptime monitoring dashboard. 12 check types including ping, HTTP/S, page load,
+        text match, API assertions, and six DNS record monitors. Microsoft Entra ID SSO,
+        PostgreSQL backend, email alerts, per-monitor retention.
+      </div>
+      <div class="tool-tags">
+        <span class="tool-tag">Node.js</span>
+        <span class="tool-tag">PostgreSQL</span>
+        <span class="tool-tag">OIDC/SAML</span>
+        <span class="tool-tag">Docker</span>
+        <span class="tool-tag">nginx</span>
+      </div>
+      <a href="https://uptime.dmsk.duckdns.org/" class="project-link" target="_blank">View demo →</a>
+    </div>
+
+  </div>
+</section>
+
+<!-- ── Projects ───────────────────────────────────────────────────────────── -->
+<section id="projects">
+  <div class="section-label">05 — Portfolio</div>
+  <h2 class="section-title">Project Portfolio</h2>
+  <div class="projects-grid">
+
+    <a class="project-card reveal reveal-delay-1" href="https://github.com/william112792/endpoint-automation-platform" target="_blank">
+      <div class="project-tag">Intune · Autopilot · PowerShell</div>
+      <div class="project-name">Endpoint Automation Platform</div>
+      <div class="project-desc">End-to-end system for Intune, Autopilot, automation workflows, and AI-driven operations across enterprise endpoints.</div>
+      <span class="project-link">View on GitHub</span>
+    </a>
+
+    <a class="project-card reveal reveal-delay-2" href="https://github.com/william112792/intune-remediation-scripts" target="_blank">
+      <div class="project-tag">PowerShell · Endpoint Compliance</div>
+      <div class="project-name">Intune Remediation Scripts</div>
+      <div class="project-desc">Reusable PowerShell detection and remediation scripts for endpoint compliance. Production-tested across 1,500 devices.</div>
+      <span class="project-link">View on GitHub</span>
+    </a>
+
+    <a class="project-card reveal reveal-delay-3" href="https://github.com/william112792/layered-infrastructure-lab" target="_blank">
+      <div class="project-tag">Networking · Virtualization · Docker</div>
+      <div class="project-name">Layered Infrastructure Lab</div>
+      <div class="project-desc">Demonstration of layered infrastructure across network, systems, and application layers with real-world service isolation.</div>
+      <span class="project-link">View on GitHub</span>
+    </a>
+
+    <a class="project-card reveal reveal-delay-4" href="https://github.com/william112792/autopilot-deployment-lab" target="_blank">
+      <div class="project-tag">Autopilot · Zero-Touch · Group Tags</div>
+      <div class="project-name">Autopilot Deployment Lab</div>
+      <div class="project-desc">Lab demonstration of Autopilot deployment using group tags and full automation for zero-touch provisioning at scale.</div>
+      <span class="project-link">View on GitHub</span>
+    </a>
+
+    <a class="project-card reveal reveal-delay-5" href="https://github.com/william112792/ai-log-analysis-toolkit" target="_blank">
+      <div class="project-tag">AI · Log Analysis · Reporting</div>
+      <div class="project-name">AI Log Analysis Toolkit</div>
+      <div class="project-desc">AI-powered log analysis, trend detection, and executive reporting workflows for infrastructure operations.</div>
+      <span class="project-link">View on GitHub</span>
+    </a>
+
+  </div>
+</section>
+
+<!-- ── Projects ───────────────────────────────────────────────────────────── -->
+
+<!-- ── Contact ───────────────────────────────────────────────────────────── -->
+<section id="contact">
+  <div class="section-label">06 — Get In Touch</div>
+  <h2 class="section-title">Contact</h2>
+
+  <div class="contact-grid">
+
+    <!-- Left: Contact form -->
+    <div>
+      <p style="font-size:0.88rem;color:var(--text);margin-bottom:1.5rem;line-height:1.7;">
+        Available for consultation and freelance endpoint automation engagements,
+        Intune/Autopilot deployments, infrastructure consulting, and self-hosted tooling.
+        Response within 24 hours.
+      </p>
+      <form class="contact-form" id="contact-form" onsubmit="sendContact(event)">
+        <div>
+          <label class="contact-label" for="c-name">Name</label>
+          <input class="contact-input" type="text" id="c-name" name="name" placeholder="Your name" required/>
+        </div>
+        <div>
+          <label class="contact-label" for="c-email">Your Email</label>
+          <input class="contact-input" type="email" id="c-email" name="email" placeholder="you@example.com" required/>
+        </div>
+        <div>
+          <label class="contact-label" for="c-subject">Subject</label>
+          <input class="contact-input" type="text" id="c-subject" name="subject" placeholder="Consultation enquiry / Project discussion"/>
+        </div>
+        <div>
+          <label class="contact-label" for="c-msg">Message</label>
+          <textarea class="contact-textarea" id="c-msg" name="message" placeholder="Tell me about your project or what you need help with..." required></textarea>
+        </div>
+        <button type="submit" class="btn-primary contact-submit">Send Message →</button>
+        <div class="form-status" id="form-status"></div>
+        <p class="contact-email-hint">Opens your email client — or email directly:
+          <a id="contact-email-direct" href="mailto:william.gordon.portfolio@gmail.com">william.gordon.portfolio@gmail.com</a>
+        </p>
+      </form>
+
+      <!-- ── Session Types Guide ─────────────────────────────────────── -->
+      <div class="sessions-section">
+        <div class="sessions-title">Session Types &amp; Pricing</div>
+        <div class="session-cards">
+
+          <!-- Discovery Call — free, windowed availability -->
+          <!--
+            WINDOW: Update the session-window text below to reflect your
+            available hours for discovery calls (e.g. "Mon–Fri · 6:00–7:00 PM ET")
+            Keep this narrow to protect your working hours.
+          -->
+          <div class="session-card featured">
+            <div class="session-header">
+              <span class="session-name">Discovery Call <span class="session-badge">Start Here</span></span>
+              <div class="session-meta">
+                <span class="session-duration">15 min</span>
+                <span class="session-price free">Free</span>
+              </div>
+            </div>
+            <p class="session-desc">
+              A no-commitment call to discuss your environment, challenges, and whether
+              I'm the right fit for your project. No preparation needed on your end.
+            </p>
+            <div class="session-window">Mon – Fri &nbsp;·&nbsp; 6:00 PM – 7:30 PM ET &nbsp;·&nbsp; Limited slots per week</div>
+          </div>
+
+          <!-- Consultation -->
+          <div class="session-card">
+            <div class="session-header">
+              <span class="session-name">Consultation</span>
+              <div class="session-meta">
+                <span class="session-duration">60 min</span>
+                <span class="session-price">$100</span>
+              </div>
+            </div>
+            <p class="session-desc">
+              Deep-dive advisory session. Intune architecture, Autopilot design, compliance
+              strategy, PowerShell remediation, or infrastructure review. Recorded summary
+              notes provided after the session.
+            </p>
+          </div>
+
+          <!-- Intune / Autopilot Audit -->
+          <div class="session-card">
+            <div class="session-header">
+              <span class="session-name">Intune &amp; Autopilot Audit</span>
+              <div class="session-meta">
+                <span class="session-duration">90 min</span>
+                <span class="session-price">$175</span>
+              </div>
+            </div>
+            <p class="session-desc">
+              Structured review of your current Intune/Autopilot configuration. I assess
+              compliance policies, deployment profiles, group tag strategy, and remediation
+              scripts — then deliver a written recommendations report within 48 hours.
+            </p>
+          </div>
+
+          <!-- Project Scoping -->
+          <div class="session-card">
+            <div class="session-header">
+              <span class="session-name">Project Scoping</span>
+              <div class="session-meta">
+                <span class="session-duration">45 min</span>
+                <span class="session-price">$50</span>
+              </div>
+            </div>
+            <p class="session-desc">
+              Define the scope, timeline, and deliverables for a larger fixed-price engagement.
+              Fee applied as credit toward the project if we proceed.
+            </p>
+          </div>
+
+        </div><!-- /.session-cards -->
+
+        <!-- Calendly CTA — shown by JS when calendly URL is set in email.json -->
+        <div class="session-cta">
+          <a id="calendly-btn" class="btn-primary" href="#" target="_blank" rel="noopener">
+            Book a Discovery Call →
+          </a>
+          <p class="session-cta-note">
+            Start with a free Discovery Call.<br/>
+            Paid sessions booked after initial call or via direct email.
+          </p>
+        </div>
+
+      </div><!-- /.sessions-section -->
+    </div>
+
+    <!-- Right: Contact links panel -->
+    <div class="contact-links">
+
+      <!-- Primary portfolio email -->
+      <a class="contact-link-item" id="contact-email-link" href="mailto:william.gordon.portfolio@gmail.com?subject=Portfolio%20Enquiry">
+        <span class="contact-link-icon">✉</span>
+        <div>
+          <div class="contact-link-label">Portfolio Email</div>
+          <div class="contact-link-value" id="contact-email-display">william.gordon.portfolio@gmail.com</div>
+        </div>
+      </a>
+
+      <!--
+        DOMAIN EMAIL — uncomment when your domain email is ready.
+        Set "domain" in email.json to activate via JS.
+        <a class="contact-link-item" id="contact-domain-email-link" href="#" style="display:none" target="_blank">
+          <span class="contact-link-icon">✉</span>
+          <div>
+            <div class="contact-link-label">Professional Email</div>
+            <div class="contact-link-value" id="contact-domain-email-display"></div>
+          </div>
+        </a>
+      -->
+
+      <!-- Calendly booking link — shown by JS when calendly URL set in email.json -->
+      <a class="contact-link-item" id="contact-calendly-link" href="#" target="_blank" rel="noopener" style="display:none">
+        <span class="contact-link-icon">📅</span>
+        <div>
+          <div class="contact-link-label">Book a Session</div>
+          <div class="contact-link-value" id="contact-calendly-display">Schedule via Calendly</div>
+        </div>
+      </a>
+
+      <a class="contact-link-item" href="https://www.linkedin.com/in/william-gordon-8113b159/" target="_blank" rel="noopener">
+        <span class="contact-link-icon">in</span>
+        <div>
+          <div class="contact-link-label">LinkedIn</div>
+          <div class="contact-link-value">william-gordon-8113b159</div>
+        </div>
+      </a>
+
+      <a class="contact-link-item" href="https://github.com/william112792" target="_blank" rel="noopener">
+        <span class="contact-link-icon">⌥</span>
+        <div>
+          <div class="contact-link-label">GitHub</div>
+          <div class="contact-link-value">github.com/william112792</div>
+        </div>
+      </a>
+
+      <!--
+        FIVERR GIGS — uncomment and add your Fiverr gig URLs when ready.
+        Duplicate the block for each gig.
+        <a class="contact-link-item" href="https://www.fiverr.com/yourusername/your-gig-slug" target="_blank" rel="noopener">
+          <span class="contact-link-icon">✦</span>
+          <div>
+            <div class="contact-link-label">Fiverr · Endpoint Automation</div>
+            <div class="contact-link-value">Intune / Autopilot deployment setup</div>
+          </div>
+        </a>
+        <a class="contact-link-item" href="https://www.fiverr.com/yourusername/your-gig-slug-2" target="_blank" rel="noopener">
+          <span class="contact-link-icon">✦</span>
+          <div>
+            <div class="contact-link-label">Fiverr · Self-Hosted Monitoring</div>
+            <div class="contact-link-value">uptime-saas deployment &amp; configuration</div>
+          </div>
+        </a>
+      -->
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ── Case Studies ──────────────────────────────────────────────────────── -->
+<section id="casestudies">
+  <div class="section-label">07 — Documented Outcomes</div>
+  <h2 class="section-title">Case Studies</h2>
+
+  <div class="cs-grid">
+
+    <!-- ══════════════════════════════════════════════════════════════════
+         TO ADD A NEW CASE STUDY: duplicate any .cs-card block and insert
+         it at the TOP of this grid. Newest entries appear first.
+         Badges: complete · ongoing · expanding
+         Metrics with unknown values: use — as placeholder
+         ══════════════════════════════════════════════════════════════════ -->
+
+    <!-- ── 2026 · ip-saas — Self-Hosted Public IP API ────────────── -->
+    <div class="cs-card reveal reveal-delay-2">
+      <div class="cs-system"><span class="cs-system-dot"></span>Node.js · Express · Docker · nginx</div>
+      <div class="cs-title">ip-saas — Self-Hosted Public IP Lookup API</div>
+      <div class="cs-block">
+        <div class="cs-block-label">Objective</div>
+        <div class="cs-block-content">
+          Design and deploy a lightweight, self-hosted public IP lookup service
+          with a clean web UI and multiple response formats. Eliminate dependency
+          on third-party IP APIs for internal tooling and provide a reliable,
+          privately-controlled endpoint for infrastructure automation.
+        </div>
+      </div>
+      <div class="cs-block">
+        <div class="cs-block-label">System</div>
+        <div class="cs-block-content">
+          Node.js · Express · Docker · nginx Reverse Proxy ·
+          JSON / Plain-Text / JSONP API Endpoints · DuckDNS · Let's Encrypt SSL
+        </div>
+      </div>
+      <div class="cs-block"><div class="cs-block-label">Results</div></div>
+      <div class="cs-metrics">
+        <div class="cs-metric">
+          <span class="cs-metric-value">3</span>
+          <span class="cs-metric-label">API response formats</span>
+        </div>
+        <div class="cs-metric">
+          <span class="cs-metric-value">Self-hosted</span>
+          <span class="cs-metric-label">Zero third-party dependency</span>
+        </div>
+        <div class="cs-metric">
+          <span class="cs-metric-value">Live</span>
+          <span class="cs-metric-label">Production deployment</span>
+        </div>
+      </div>
+      <div class="cs-footer" style="flex-direction:column;align-items:flex-start;gap:0.6rem;">
+        <div style="display:flex;justify-content:space-between;width:100%;align-items:center;">
+          <span class="cs-date">2026</span>
+          <span class="cs-badge complete">Complete</span>
+        </div>
+        <a href="https://ipme.dmsk.duckdns.org/" target="_blank" rel="noopener"
+           style="font-family:var(--font-mono);font-size:0.62rem;color:var(--accent);
+                  text-decoration:none;letter-spacing:0.06em;display:flex;align-items:center;gap:0.3rem;">
+          ◉ View live demo → ipme.dmsk.duckdns.org
+        </a>
+      </div>
+    </div>
+
+    <!-- ── 2026 · uptime-saas — Self-Hosted Monitoring Dashboard ──── -->
+    <div class="cs-card reveal reveal-delay-3">
+      <div class="cs-system"><span class="cs-system-dot"></span>Node.js · PostgreSQL · Docker · OIDC/SAML</div>
+      <div class="cs-title">uptime-saas — Self-Hosted Uptime Monitoring Dashboard</div>
+      <div class="cs-block">
+        <div class="cs-block-label">Objective</div>
+        <div class="cs-block-content">
+          Build a full-featured, self-hosted uptime monitoring platform to replace
+          paid SaaS monitoring tools. Deliver 12 check types, Microsoft SSO,
+          PostgreSQL-backed results storage, email alerting, and a multi-environment
+          deployment model — entirely on self-managed infrastructure.
+        </div>
+      </div>
+      <div class="cs-block">
+        <div class="cs-block-label">System</div>
+        <div class="cs-block-content">
+          Node.js · Express · EJS · PostgreSQL · Docker · nginx ·
+          Microsoft Entra ID OIDC &amp; SAML SSO · nodemailer ·
+          Worker Threads · DuckDNS · Let's Encrypt SSL
+        </div>
+      </div>
+      <div class="cs-block"><div class="cs-block-label">Results</div></div>
+      <div class="cs-metrics">
+        <div class="cs-metric">
+          <span class="cs-metric-value">12</span>
+          <span class="cs-metric-label">Check types</span>
+        </div>
+        <div class="cs-metric">
+          <span class="cs-metric-value">OIDC + SAML</span>
+          <span class="cs-metric-label">Microsoft SSO modes</span>
+        </div>
+        <div class="cs-metric">
+          <span class="cs-metric-value">PostgreSQL</span>
+          <span class="cs-metric-label">Persistent results backend</span>
+        </div>
+        <div class="cs-metric">
+          <span class="cs-metric-value">$0/mo</span>
+          <span class="cs-metric-label">vs paid monitoring SaaS</span>
+        </div>
+      </div>
+      <div class="cs-footer" style="flex-direction:column;align-items:flex-start;gap:0.6rem;">
+        <div style="display:flex;justify-content:space-between;width:100%;align-items:center;">
+          <span class="cs-date">2026</span>
+          <span class="cs-badge expanding">Expanding</span>
+        </div>
+        <a href="https://uptime.dmsk.duckdns.org/" target="_blank" rel="noopener"
+           style="font-family:var(--font-mono);font-size:0.62rem;color:var(--accent);
+                  text-decoration:none;letter-spacing:0.06em;display:flex;align-items:center;gap:0.3rem;">
+          ◉ View live demo → uptime.dmsk.duckdns.org
+        </a>
+      </div>
+    </div>
+
+    <!-- ── 2026 · Computer Object 90-Day Retention ───────────────────── -->
+    <div class="cs-card reveal reveal-delay-1">
+      <div class="cs-system"><span class="cs-system-dot"></span>PowerShell · Srvany · Active Directory</div>
+      <div class="cs-title">Automated Computer Object Retention &amp; Cleanup</div>
+      <div class="cs-block">
+        <div class="cs-block-label">Objective</div>
+        <div class="cs-block-content">
+          Establish a 90-day retention policy for computer objects in on-premises
+          Active Directory. Automatically remove stale and expired computer records
+          to maintain a clean, accurate device inventory and reduce compliance drift.
+        </div>
+      </div>
+      <div class="cs-block">
+        <div class="cs-block-label">System</div>
+        <div class="cs-block-content">
+          PowerShell Automation · Srvany Custom Windows Service ·
+          On-Premises Active Directory
+        </div>
+      </div>
+      <div class="cs-block"><div class="cs-block-label">Results</div></div>
+      <div class="cs-metrics">
+        <div class="cs-metric">
+          <span class="cs-metric-value">~50</span>
+          <span class="cs-metric-label">Computer objects removed/week</span>
+        </div>
+        <div class="cs-metric">
+          <span class="cs-metric-value">90 days</span>
+          <span class="cs-metric-label">Retention policy</span>
+        </div>
+      </div>
+      <div class="cs-footer">
+        <span class="cs-date">2026</span>
+        <span class="cs-badge ongoing">Ongoing</span>
+      </div>
+    </div>
+
+    <!-- ── 2025 · Autopilot V1.5 & V2 — Zero-Touch at Scale ───────── -->
+    <div class="cs-card reveal reveal-delay-1">
+      <div class="cs-system"><span class="cs-system-dot"></span>Microsoft Intune · Autopilot · Azure AD</div>
+      <div class="cs-title">Autopilot V1.5 &amp; V2 — Zero-Touch Provisioning at Scale</div>
+      <div class="cs-block">
+        <div class="cs-block-label">Objective</div>
+        <div class="cs-block-content">
+          Expand zero-touch provisioning by syncing existing devices into Autopilot
+          and establishing a procurement process where newly purchased devices arrive
+          pre-tagged with their Group Tag — ready to provision without any technician
+          intervention at the end-user site.
+        </div>
+      </div>
+      <div class="cs-block">
+        <div class="cs-block-label">System</div>
+        <div class="cs-block-content">
+          Microsoft Intune · Windows Autopilot · Dynamic Security Groups ·
+          Deployment Profiles · Enrollment Status Pages ·
+          Application Deployments · Domain Policies ·
+          Intune Connector for Active Directory · Procurement Group Tag Workflow
+        </div>
+      </div>
+      <div class="cs-block"><div class="cs-block-label">Results</div></div>
+      <div class="cs-metrics">
+        <div class="cs-metric">
+          <span class="cs-metric-value">7</span>
+          <span class="cs-metric-label">Group Tags created</span>
+        </div>
+        <div class="cs-metric">
+          <span class="cs-metric-value">~300</span>
+          <span class="cs-metric-label">Devices deployed via Autopilot</span>
+        </div>
+        <div class="cs-metric">
+          <span class="cs-metric-value">~900</span>
+          <span class="cs-metric-label">Devices Autopilot-ready if reset</span>
+        </div>
+        <div class="cs-metric">
+          <span class="cs-metric-value">Full stack</span>
+          <span class="cs-metric-label">Profiles · ESP · Apps · GPO · Groups</span>
+        </div>
+      </div>
+      <div class="cs-footer">
+        <span class="cs-date">2025</span>
+        <span class="cs-badge expanding">Expanding</span>
+      </div>
+    </div>
+
+    <!-- ── 2024 · Autopilot V1 — Pre-Provisioning Foundation ────────── -->
+    <div class="cs-card reveal reveal-delay-2">
+      <div class="cs-system"><span class="cs-system-dot"></span>Microsoft Intune · Autopilot</div>
+      <div class="cs-title">Autopilot V1 — Pre-Provisioning via Hardware Hash Tokens</div>
+      <div class="cs-block">
+        <div class="cs-block-label">Objective</div>
+        <div class="cs-block-content">
+          Establish the initial Autopilot pre-provisioning process using hardware hash
+          token collection. Define the foundational Group Tag and category structure
+          to drive app deployment and provisioning policy assignment for all subsequent
+          Autopilot iterations.
+        </div>
+      </div>
+      <div class="cs-block">
+        <div class="cs-block-label">System</div>
+        <div class="cs-block-content">
+          Microsoft Intune · Windows Autopilot · Hardware Hash Token Collection ·
+          Group Tags · App Deployment Policies · Provisioning Profiles
+        </div>
+      </div>
+      <div class="cs-block"><div class="cs-block-label">Results</div></div>
+      <div class="cs-metrics">
+        <div class="cs-metric">
+          <span class="cs-metric-value">~30</span>
+          <span class="cs-metric-label">Autopilot devices deployed</span>
+        </div>
+        <div class="cs-metric">
+          <span class="cs-metric-value">Foundation</span>
+          <span class="cs-metric-label">Group Tags &amp; categories defined</span>
+        </div>
+        <div class="cs-metric">
+          <span class="cs-metric-value">V1 → V2</span>
+          <span class="cs-metric-label">Iterated into full zero-touch</span>
+        </div>
+      </div>
+      <div class="cs-footer">
+        <span class="cs-date">2024</span>
+        <span class="cs-badge complete">Complete</span>
+      </div>
+    </div>
+
+    <!-- ── 2023 · Aquera — Automated User Lifecycle Management ──────── -->
+    <div class="cs-card reveal reveal-delay-2">
+      <div class="cs-system"><span class="cs-system-dot"></span>Aquera · Java · Power Automate</div>
+      <div class="cs-title">Automated User Lifecycle Management via Aquera</div>
+      <div class="cs-block">
+        <div class="cs-block-label">Objective</div>
+        <div class="cs-block-content">
+          Fully automate the user lifecycle — from creation through to deletion and
+          archival — using Aquera with custom Java-based attribute mapping. Deliver
+          automated email notifications and dashboard metrics reporting throughout
+          the lifecycle to reduce IT dependency on manual provisioning.
+        </div>
+      </div>
+      <div class="cs-block">
+        <div class="cs-block-label">System</div>
+        <div class="cs-block-content">
+          Aquera Identity Sync · Custom Java Attribute Mapping ·
+          Power Automate Workflows · Email Notification Templates ·
+          Dashboard Metrics Reporting
+        </div>
+      </div>
+      <div class="cs-block"><div class="cs-block-label">Results</div></div>
+      <div class="cs-metrics">
+        <div class="cs-metric">
+          <span class="cs-metric-value">~1,000</span>
+          <span class="cs-metric-label">Users automated</span>
+        </div>
+        <div class="cs-metric">
+          <span class="cs-metric-value">Full cycle</span>
+          <span class="cs-metric-label">Creation → archival</span>
+        </div>
+        <div class="cs-metric">
+          <span class="cs-metric-value">Employees &amp; contractors</span>
+          <span class="cs-metric-label">Account types covered</span>
+        </div>
+      </div>
+      <div class="cs-footer">
+        <span class="cs-date">2023</span>
+        <span class="cs-badge complete">Complete</span>
+      </div>
+    </div>
+
+    <!-- ── 2022 · User Account 90-Day Retention ──────────────────────── -->
+    <div class="cs-card reveal reveal-delay-3">
+      <div class="cs-system"><span class="cs-system-dot"></span>PowerShell · Srvany · Active Directory</div>
+      <div class="cs-title">Automated User Account Retention &amp; Cleanup</div>
+      <div class="cs-block">
+        <div class="cs-block-label">Objective</div>
+        <div class="cs-block-content">
+          Enforce a 90-day retention policy for disabled and expired user accounts
+          in on-premises Active Directory. Automatically move accounts into a
+          retention OU at expiry and permanently delete them after the retention
+          window — eliminating manual cleanup and reducing stale account risk.
+        </div>
+      </div>
+      <div class="cs-block">
+        <div class="cs-block-label">System</div>
+        <div class="cs-block-content">
+          PowerShell Automation · Srvany Custom Windows Service ·
+          On-Premises Active Directory · Retention OU Structure
+        </div>
+      </div>
+      <div class="cs-block"><div class="cs-block-label">Results</div></div>
+      <div class="cs-metrics">
+        <div class="cs-metric">
+          <span class="cs-metric-value">~20</span>
+          <span class="cs-metric-label">Accounts deleted/week</span>
+        </div>
+        <div class="cs-metric">
+          <span class="cs-metric-value">90 days</span>
+          <span class="cs-metric-label">Retention policy</span>
+        </div>
+        <div class="cs-metric">
+          <span class="cs-metric-value">Automated</span>
+          <span class="cs-metric-label">OU move at expiry</span>
+        </div>
+      </div>
+      <div class="cs-footer">
+        <span class="cs-date">2022</span>
+        <span class="cs-badge ongoing">Ongoing</span>
+      </div>
+    </div>
+
+    <!-- ── 2018–2022 · ESET Threat Response & App Management ────────── -->
+    <div class="cs-card reveal reveal-delay-6">
+      <div class="cs-system"><span class="cs-system-dot"></span>ESET PROTECT · Intune</div>
+      <div class="cs-title">Endpoint Security Management — Threat Response &amp; Application Currency</div>
+      <div class="cs-block">
+        <div class="cs-block-label">Objective</div>
+        <div class="cs-block-content">
+          Bring all 1,354 applications up to date from a fully outdated baseline and
+          maintain currency at near-100%. Establish scan compliance across all devices
+          and maintain active threat count at zero with a same-day remediation SLA.
+        </div>
+      </div>
+      <div class="cs-block">
+        <div class="cs-block-label">System</div>
+        <div class="cs-block-content">
+          ESET PROTECT · Application Management · Scheduled Scan Enforcement ·
+          Threat Remediation Workflows · Microsoft Intune
+        </div>
+      </div>
+      <div class="cs-block"><div class="cs-block-label">Results</div></div>
+      <div class="cs-metrics">
+        <div class="cs-metric">
+          <span class="cs-metric-value">0 → 1,189</span>
+          <span class="cs-metric-label">Apps brought current (of 1,354)</span>
+        </div>
+        <div class="cs-metric">
+          <span class="cs-metric-value">~165</span>
+          <span class="cs-metric-label">Outdated apps — confirmed remote/offline devices</span>
+        </div>
+        <div class="cs-metric">
+          <span class="cs-metric-value">~30</span>
+          <span class="cs-metric-label">Outdated devices at best (remote offline)</span>
+        </div>
+        <div class="cs-metric">
+          <span class="cs-metric-value">1,354 → ~203</span>
+          <span class="cs-metric-label">Scans &gt;7 days — confirmed remote/offline devices</span>
+        </div>
+        <div class="cs-metric">
+          <span class="cs-metric-value">&lt;1 day</span>
+          <span class="cs-metric-label">Threat remediation SLA</span>
+        </div>
+        <div class="cs-metric">
+          <span class="cs-metric-value">~10/week</span>
+          <span class="cs-metric-label">Low-severity threats avg</span>
+        </div>
+        <div class="cs-metric">
+          <span class="cs-metric-value">0</span>
+          <span class="cs-metric-label">Active threats maintained</span>
+        </div>
+      </div>
+      <div class="cs-footer">
+        <span class="cs-date">2018 – 2022</span>
+        <span class="cs-badge complete">Complete</span>
+      </div>
+    </div>
+
+    <!-- ── 2021 · DeskDirector Migration ─────────────────────────────── -->
+    <div class="cs-card reveal reveal-delay-4">
+      <div class="cs-system"><span class="cs-system-dot"></span>DeskDirector · Power Automate</div>
+      <div class="cs-title">Ticketing System Migration to DeskDirector with Workflow Automation</div>
+      <div class="cs-block">
+        <div class="cs-block-label">Objective</div>
+        <div class="cs-block-content">
+          Migrate from ConnectWise to DeskDirector as the primary ticketing platform.
+          Build out custom intake forms and Power Automate workflows to automate ticket
+          routing, task assignment, and status changes — replacing manual processes
+          for hiring, termination, daily reporting, and error alerting.
+        </div>
+      </div>
+      <div class="cs-block">
+        <div class="cs-block-label">System</div>
+        <div class="cs-block-content">
+          DeskDirector · Custom Intake Forms · Power Automate ·
+          Automated Hiring &amp; Termination Workflows ·
+          Daily System Reporting · Error Alerting
+        </div>
+      </div>
+      <div class="cs-block"><div class="cs-block-label">Results</div></div>
+      <div class="cs-metrics">
+        <div class="cs-metric">
+          <span class="cs-metric-value">Automated</span>
+          <span class="cs-metric-label">Hiring workflows</span>
+        </div>
+        <div class="cs-metric">
+          <span class="cs-metric-value">Automated</span>
+          <span class="cs-metric-label">Termination workflows</span>
+        </div>
+        <div class="cs-metric">
+          <span class="cs-metric-value">Daily</span>
+          <span class="cs-metric-label">Automated system reports</span>
+        </div>
+        <div class="cs-metric">
+          <span class="cs-metric-value">Real-time</span>
+          <span class="cs-metric-label">Error alerting</span>
+        </div>
+      </div>
+      <div class="cs-footer">
+        <span class="cs-date">2021</span>
+        <span class="cs-badge complete">Complete</span>
+      </div>
+    </div>
+
+    <!-- ── 2021 · MDM GPO Migration + Azure AD Connect ───────────────── -->
+    <div class="cs-card reveal reveal-delay-5">
+      <div class="cs-system"><span class="cs-system-dot"></span>Azure AD · Intune · Entra Connect</div>
+      <div class="cs-title">MDM GPO Migration &amp; Hybrid Identity Setup via Entra Connect</div>
+      <div class="cs-block">
+        <div class="cs-block-label">Objective</div>
+        <div class="cs-block-content">
+          Sync on-premises users and devices to Azure AD and Microsoft Intune as the
+          foundation for cloud-managed endpoint management. Migrate existing GPO policies
+          to MDM-equivalent Intune configuration profiles to prepare the estate for
+          zero-touch Autopilot deployment.
+        </div>
+      </div>
+      <div class="cs-block">
+        <div class="cs-block-label">System</div>
+        <div class="cs-block-content">
+          Microsoft Entra Connect (Azure AD Connect) · Microsoft Intune ·
+          Hybrid Azure AD Join · MDM Policy Migration · Group Policy Objects
+        </div>
+      </div>
+      <div class="cs-block"><div class="cs-block-label">Results</div></div>
+      <div class="cs-metrics">
+        <div class="cs-metric">
+          <span class="cs-metric-value">~750</span>
+          <span class="cs-metric-label">Hybrid user accounts synced</span>
+        </div>
+        <div class="cs-metric">
+          <span class="cs-metric-value">~750</span>
+          <span class="cs-metric-label">Hybrid devices registered</span>
+        </div>
+      </div>
+      <div class="cs-footer">
+        <span class="cs-date">2021</span>
+        <span class="cs-badge complete">Complete</span>
+      </div>
+    </div>
+
+    <!-- ── 2019–2025 · Provisioning Package — Mass Endpoint Config ── -->
+    <div class="cs-card reveal reveal-delay-1">
+      <div class="cs-system"><span class="cs-system-dot"></span>Windows Configuration Designer · PowerShell · Registry</div>
+      <div class="cs-title">USB Provisioning Packages — Automated Mass Endpoint Configuration</div>
+      <div class="cs-block">
+        <div class="cs-block-label">Objective</div>
+        <div class="cs-block-content">
+          Build a USB-based provisioning system using Windows Configuration Designer
+          to fully automate endpoint setup without technician interaction. PowerShell
+          runs on startup with registry-based auto-login between reboots — cycling
+          through application installation and configuration passes until the device
+          is fully provisioned, then disabling the automation account automatically.
+        </div>
+      </div>
+      <div class="cs-block">
+        <div class="cs-block-label">System</div>
+        <div class="cs-block-content">
+          Windows Configuration Designer · PowerShell Startup Automation ·
+          Registry Auto-Login Between Reboots · 4 Purpose-Built Provisioning Packages ·
+          USB Deployment · Automated Account Disable on Completion
+        </div>
+      </div>
+      <div class="cs-block"><div class="cs-block-label">Results</div></div>
+      <div class="cs-metrics">
+        <div class="cs-metric">
+          <span class="cs-metric-value">~15,000</span>
+          <span class="cs-metric-label">Endpoints provisioned</span>
+        </div>
+        <div class="cs-metric">
+          <span class="cs-metric-value">4</span>
+          <span class="cs-metric-label">Provisioning packages designed</span>
+        </div>
+        <div class="cs-metric">
+          <span class="cs-metric-value">1 USB</span>
+          <span class="cs-metric-label">Trigger to fully configure</span>
+        </div>
+        <div class="cs-metric">
+          <span class="cs-metric-value">0</span>
+          <span class="cs-metric-label">Manual login cycles required</span>
+        </div>
+      </div>
+      <div class="cs-footer">
+        <span class="cs-date">2019 – 2025</span>
+        <span class="cs-badge complete">Complete</span>
+      </div>
+    </div>
+
+    <!-- ── 2019 · ConnectWise Automate Rollout ───────────────────────── -->
+    <div class="cs-card reveal reveal-delay-1">
+      <div class="cs-system"><span class="cs-system-dot"></span>ConnectWise Automate · GPO</div>
+      <div class="cs-title">ConnectWise Automate Agent Deployment via GPO</div>
+      <div class="cs-block">
+        <div class="cs-block-label">Objective</div>
+        <div class="cs-block-content">
+          Replace the Samanage remote management agent with ConnectWise Automate to
+          support RMM scripting, automated patch management, and software deployment
+          at scale across all locations.
+        </div>
+      </div>
+      <div class="cs-block">
+        <div class="cs-block-label">System</div>
+        <div class="cs-block-content">
+          ConnectWise Automate · Group Policy Object Deployment ·
+          On-Premises Active Directory · MSI Agent Packaging
+        </div>
+      </div>
+      <div class="cs-block"><div class="cs-block-label">Results</div></div>
+      <div class="cs-metrics">
+        <div class="cs-metric">
+          <span class="cs-metric-value">~650</span>
+          <span class="cs-metric-label">Endpoints deployed</span>
+        </div>
+        <div class="cs-metric">
+          <span class="cs-metric-value">~40</span>
+          <span class="cs-metric-label">Locations covered</span>
+        </div>
+      </div>
+      <div class="cs-footer">
+        <span class="cs-date">2019</span>
+        <span class="cs-badge complete">Complete</span>
+      </div>
+    </div>
+
+    <!-- ── 2017 · Password Expiry Notification ───────────────────────── -->
+    <div class="cs-card reveal reveal-delay-2">
+      <div class="cs-system"><span class="cs-system-dot"></span>PowerShell · Srvany · Active Directory</div>
+      <div class="cs-title">Proactive Password Expiry Notification — Custom PowerShell Service</div>
+      <div class="cs-block">
+        <div class="cs-block-label">Objective</div>
+        <div class="cs-block-content">
+          Reduce reactive password reset tickets by at least 30% by notifying users
+          proactively before their password expires. Replace ad-hoc help desk calls
+          with an automated, multi-touch email sequence requiring zero IT involvement.
+        </div>
+      </div>
+      <div class="cs-block">
+        <div class="cs-block-label">System</div>
+        <div class="cs-block-content">
+          Custom PowerShell Script · Srvany Custom Windows Service (auto-start) ·
+          On-Premises Active Directory · Automated Email Notifications at 14, 7, and 1 day
+        </div>
+      </div>
+      <div class="cs-block"><div class="cs-block-label">Results</div></div>
+      <div class="cs-metrics">
+        <div class="cs-metric">
+          <span class="cs-metric-value">25 → 6</span>
+          <span class="cs-metric-label">Reset tickets/week</span>
+        </div>
+        <div class="cs-metric">
+          <span class="cs-metric-value">76%</span>
+          <span class="cs-metric-label">Ticket reduction</span>
+        </div>
+        <div class="cs-metric">
+          <span class="cs-metric-value">~10</span>
+          <span class="cs-metric-label">Users notified/week</span>
+        </div>
+        <div class="cs-metric">
+          <span class="cs-metric-value">3-touch</span>
+          <span class="cs-metric-label">14 · 7 · 1 day notices</span>
+        </div>
+      </div>
+      <div class="cs-footer">
+        <span class="cs-date">2017</span>
+        <span class="cs-badge complete">Complete</span>
+      </div>
+    </div>
+
+    <!-- ── 2016 · Ticket Volume & Project Management ──────────────────── -->
+    <div class="cs-card reveal reveal-delay-3">
+      <div class="cs-system"><span class="cs-system-dot"></span>Samanage · Ticket Management</div>
+      <div class="cs-title">High-Volume Ticket Management &amp; Project Tracking</div>
+      <div class="cs-block">
+        <div class="cs-block-label">Objective</div>
+        <div class="cs-block-content">
+          Establish structured ticket triage and project tracking discipline to reduce
+          open ticket backlog and deliver new hire and termination projects with
+          consistent turnaround. Maintain visibility across multi-layered projects
+          spanning access provisioning, credentials, and hardware.
+        </div>
+      </div>
+      <div class="cs-block">
+        <div class="cs-block-label">System</div>
+        <div class="cs-block-content">
+          Samanage Ticket Tracking · Project Templates ·
+          New Hire &amp; Termination Workflows · Multi-layer Ticket Chaining
+        </div>
+      </div>
+      <div class="cs-block"><div class="cs-block-label">Results</div></div>
+      <div class="cs-metrics">
+        <div class="cs-metric">
+          <span class="cs-metric-value">~160</span>
+          <span class="cs-metric-label">Tickets closed/week</span>
+        </div>
+        <div class="cs-metric">
+          <span class="cs-metric-value">~32</span>
+          <span class="cs-metric-label">Tickets closed/day</span>
+        </div>
+        <div class="cs-metric">
+          <span class="cs-metric-value">~10</span>
+          <span class="cs-metric-label">New hire/term projects/week</span>
+        </div>
+      </div>
+      <div class="cs-footer">
+        <span class="cs-date">2016</span>
+        <span class="cs-badge complete">Complete</span>
+      </div>
+    </div>
+
+    <!-- ── 2015 · PowerShell Endpoint Provisioning ───────────────────── -->
+    <div class="cs-card reveal reveal-delay-4">
+      <div class="cs-system"><span class="cs-system-dot"></span>PowerShell · Windows</div>
+      <div class="cs-title">Automated Endpoint Provisioning via PowerShell</div>
+      <div class="cs-block">
+        <div class="cs-block-label">Objective</div>
+        <div class="cs-block-content">
+          Eliminate manual, image-based endpoint preparation by building a PowerShell
+          provisioning framework that resets and fully prepares Windows endpoints
+          without physical reimaging — reducing preparation time from hours to a
+          repeatable automated process.
+        </div>
+      </div>
+      <div class="cs-block">
+        <div class="cs-block-label">System</div>
+        <div class="cs-block-content">
+          PowerShell Scripting · Windows Configuration Automation ·
+          No-Image Provisioning Framework
+        </div>
+      </div>
+      <div class="cs-block"><div class="cs-block-label">Results</div></div>
+      <div class="cs-metrics">
+        <div class="cs-metric">
+          <span class="cs-metric-value">~40</span>
+          <span class="cs-metric-label">Endpoints provisioned/day</span>
+        </div>
+        <div class="cs-metric">
+          <span class="cs-metric-value">~10</span>
+          <span class="cs-metric-label">Endpoints in active rotation</span>
+        </div>
+        <div class="cs-metric">
+          <span class="cs-metric-value">0</span>
+          <span class="cs-metric-label">Manual imaging required</span>
+        </div>
+      </div>
+      <div class="cs-footer">
+        <span class="cs-date">2015</span>
+        <span class="cs-badge complete">Complete</span>
+      </div>
+    </div>
+
+    <!-- ── 2015 · Samanage Agent Deployment ─────────────────────────── -->
+    <div class="cs-card reveal reveal-delay-5">
+      <div class="cs-system"><span class="cs-system-dot"></span>Samanage · GPO</div>
+      <div class="cs-title">Samanage Remote Management Agent Deployment via GPO</div>
+      <div class="cs-block">
+        <div class="cs-block-label">Objective</div>
+        <div class="cs-block-content">
+          Deploy Samanage remote management agents to all endpoints to enable centralised
+          device visibility and integrate hardware inventory with the new ticketing system.
+          Eliminate manual asset tracking and enable remote IT support capabilities.
+        </div>
+      </div>
+      <div class="cs-block">
+        <div class="cs-block-label">System</div>
+        <div class="cs-block-content">
+          Samanage Remote Management · Group Policy Object Deployment ·
+          On-Premises Active Directory · Asset Inventory Integration
+        </div>
+      </div>
+      <div class="cs-block"><div class="cs-block-label">Results</div></div>
+      <div class="cs-metrics">
+        <div class="cs-metric">
+          <span class="cs-metric-value">~200</span>
+          <span class="cs-metric-label">Endpoints deployed</span>
+        </div>
+        <div class="cs-metric">
+          <span class="cs-metric-value">GPO</span>
+          <span class="cs-metric-label">Zero-touch delivery method</span>
+        </div>
+      </div>
+      <div class="cs-footer">
+        <span class="cs-date">September 2015</span>
+        <span class="cs-badge complete">Complete</span>
+      </div>
+    </div>
+
+    <!-- ── 2014 · Active Directory OU Structure ──────────────────────── -->
+    <div class="cs-card reveal reveal-delay-6">
+      <div class="cs-system"><span class="cs-system-dot"></span>Active Directory · Group Policy</div>
+      <div class="cs-title">Active Directory OU Restructure — Department &amp; Location Organisation</div>
+      <div class="cs-block">
+        <div class="cs-block-label">Objective</div>
+        <div class="cs-block-content">
+          Design and implement a structured Organisational Unit hierarchy in on-premises
+          Active Directory, separating user and computer objects by department and location.
+          Introduce Shadow Groups for dynamic OU-to-Group synchronisation to replace
+          manual group membership management.
+        </div>
+      </div>
+      <div class="cs-block">
+        <div class="cs-block-label">System</div>
+        <div class="cs-block-content">
+          On-Premises Active Directory · OU Hierarchy Design ·
+          Group Policy Objects · Shadow Groups (Dynamic OU-to-Group Sync) ·
+          Active Directory Users &amp; Computers
+        </div>
+      </div>
+      <div class="cs-block"><div class="cs-block-label">Results</div></div>
+      <div class="cs-metrics">
+        <div class="cs-metric">
+          <span class="cs-metric-value">~8</span>
+          <span class="cs-metric-label">Departments structured</span>
+        </div>
+        <div class="cs-metric">
+          <span class="cs-metric-value">~10</span>
+          <span class="cs-metric-label">Locations organised</span>
+        </div>
+        <div class="cs-metric">
+          <span class="cs-metric-value">~200</span>
+          <span class="cs-metric-label">User objects organised</span>
+        </div>
+        <div class="cs-metric">
+          <span class="cs-metric-value">Dynamic</span>
+          <span class="cs-metric-label">Group sync via Shadow Groups</span>
+        </div>
+      </div>
+      <div class="cs-footer">
+        <span class="cs-date">December 2014</span>
+        <span class="cs-badge complete">Complete</span>
+      </div>
+    </div>
+
+      </div><!-- /.cs-grid -->
+
+  <p style="font-family:var(--font-mono);font-size:0.62rem;color:var(--muted);margin-top:1.5rem;letter-spacing:0.04em;line-height:1.7;">
+    * Placeholders (—) indicate metrics to be added. Replace with your actual figures
+    to complete each case study. Additional case studies can be added by duplicating
+    a <code style="color:var(--accent3);">.cs-card</code> block.
+  </p>
+
+</section>
+
+<!-- ── Footer ─────────────────────────────────────────────────────────────── -->
+<footer>
+  <div class="footer-name">· Billy Gordon ·</div>
+  <div class="footer-links">
+    <a href="https://github.com/william112792" target="_blank">GitHub</a>
+    <a href="https://www.linkedin.com/in/william-gordon-8113b159/" target="_blank">LinkedIn</a>
+    <a href="https://ipme.dmsk.duckdns.org/" target="_blank">ip-saas</a>
+    <a href="https://uptime.dmsk.duckdns.org/" target="_blank">uptime-saas</a>
+    <a href="https://github.com/William112792/William112792.github.io/blob/main/resume/Resume_WilliamGordon.pdf?raw=true" target="_blank">Resume PDF</a>
+  </div>
+  <div class="footer-copy">Built for scalable portfolio growth · Hosted on GitHub Pages · South Carolina</div>
 </footer>
+
+<!-- ── Scroll reveal ──────────────────────────────────────────────────────── -->
+<script>
+// ══════════════════════════════════════════════════════════════════════════
+// THEME SYSTEM
+// ══════════════════════════════════════════════════════════════════════════
+function setTheme(theme) {
+  document.documentElement.setAttribute('data-theme', theme);
+  localStorage.setItem('portfolio-theme', theme);
+  document.querySelectorAll('.theme-btn').forEach(function(b) {
+    b.classList.toggle('active', b.getAttribute('data-theme') === theme);
+  });
+}
+(function() {
+  var saved = localStorage.getItem('portfolio-theme') || 'cyber';
+  document.documentElement.setAttribute('data-theme', saved);
+  document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('.theme-btn').forEach(function(b) {
+      b.classList.toggle('active', b.getAttribute('data-theme') === saved);
+    });
+  });
+})();
+
+
+// ══════════════════════════════════════════════════════════════════════════
+// EMAIL.JSON LOADER
+// Fetches email.json and updates all email references in the page.
+// Format: { "primary": "you@example.com", "domain": "you@yourdomain.com" }
+// domain is optional — only shown when present.
+// Falls back to hardcoded values if email.json is missing.
+// ══════════════════════════════════════════════════════════════════════════
+(function loadEmail() {
+  fetch('email.json?_=' + Date.now())
+    .then(function(r) { return r.ok ? r.json() : null; })
+    .then(function(d) {
+      if (!d || !d.primary) return;
+      var email = d.primary;
+
+      // Contact link card — primary email
+      var link    = document.getElementById('contact-email-link');
+      var display = document.getElementById('contact-email-display');
+      if (link)    link.href       = 'mailto:' + email + '?subject=Portfolio%20Enquiry';
+      if (display) display.textContent = email;
+
+      // Hint below form
+      var direct = document.getElementById('contact-email-direct');
+      if (direct) { direct.href = 'mailto:' + email; direct.textContent = email; }
+
+      // Store for contact form sendContact() use
+      window._portfolioEmail = email;
+
+      // Domain email — set "domain" in email.json and uncomment HTML block to activate
+      if (d.domain) {
+        var domLink = document.getElementById('contact-domain-email-link');
+        var domDisp = document.getElementById('contact-domain-email-display');
+        if (domLink) { domLink.href = 'mailto:' + d.domain; domLink.style.display = ''; }
+        if (domDisp)  domDisp.textContent = d.domain;
+      }
+
+      // Calendly — set "calendly" in email.json to activate booking button and link card
+      // TO ACTIVATE: add your Calendly URL to email.json as "calendly": "https://calendly.com/yourhandle"
+      if (d.calendly) {
+        // Sidebar link card
+        var calLink = document.getElementById('contact-calendly-link');
+        if (calLink) { calLink.href = d.calendly; calLink.style.display = ''; }
+
+        // Hero CTA button in sessions guide
+        var calBtn = document.getElementById('calendly-btn');
+        if (calBtn)  { calBtn.href = d.calendly; calBtn.style.display = ''; }
+      }
+    })
+    .catch(function() { /* no email.json — hardcoded fallback stays */ });
+})();
+
+
+// ══════════════════════════════════════════════════════════════════════════
+// RATINGS.JSON LOADER + PANEL
+// Fetches ratings.json — if enabled:true shows the trigger button.
+// Trigger fades hero profile out and ratings panel in (crossfade/blur).
+// Format: see ratings.json for full schema.
+// display.mode: "top_rated" | "top_salary" | "manual"
+// display.count: number of roles to show (default 6)
+// display.show_salary: true|false
+// ══════════════════════════════════════════════════════════════════════════
+var _ratingsData = null;
+var _ratingsOpen = false;
+
+function formatSalary(n) {
+  if (!n) return '—';
+  return '$' + Math.round(n / 1000) + 'K';
+}
+
+function scoreClass(s) {
+  if (s === null || s === undefined) return 'none';
+  if (s >= 8.5) return 'high';
+  if (s >= 7.0) return 'mid';
+  return 'low';
+}
+
+function scoreDisplay(s) {
+  if (s === null || s === undefined) return '—';
+  return s.toFixed(1);
+}
+
+function buildRatingsRows(data) {
+  var roles = data.roles.filter(function(r) { return r.show !== false; });
+  var count = (data.display && data.display.count) || 6;
+  var mode  = (data.display && data.display.mode) || 'top_rated';
+  var showSalary = data.display && data.display.show_salary;
+
+  // Sort based on mode
+  if (mode === 'top_salary') {
+    roles.sort(function(a,b) {
+      return ((b.salary && b.salary.mid) || 0) - ((a.salary && a.salary.mid) || 0);
+    });
+  } else if (mode === 'top_rated') {
+    roles.sort(function(a,b) {
+      return (b.scores.claude || 0) - (a.scores.claude || 0);
+    });
+  }
+  // 'manual' — use as-is in JSON order
+
+  roles = roles.slice(0, count);
+
+  var html = '';
+  roles.forEach(function(r) {
+    var s = r.scores;
+    html += '<div class="ratings-row">';
+    html += '<div class="ratings-role-name">' + r.role + '</div>';
+    html += '<div class="ratings-score ' + scoreClass(s.claude)   + '">' + scoreDisplay(s.claude)   + '</div>';
+    html += '<div class="ratings-score ' + scoreClass(s.chatgpt)  + '">' + scoreDisplay(s.chatgpt)  + '</div>';
+    html += '<div class="ratings-score ' + scoreClass(s.gemini)   + '">' + scoreDisplay(s.gemini)   + '</div>';
+    html += '<div class="ratings-score ' + scoreClass(s.deepseek) + '">' + scoreDisplay(s.deepseek) + '</div>';
+    if (showSalary) {
+      var salaryUrl = r.salary && r.salary.url;
+      var salaryMid = r.salary && formatSalary(r.salary.mid);
+      if (salaryUrl) {
+        html += '<div class="ratings-salary"><a href="' + salaryUrl + '" target="_blank" rel="noopener" style="color:inherit;text-decoration:none;" title="' + (r.salary.source||'') + '">' + (salaryMid||'—') + '</a></div>';
+      } else {
+        html += '<div class="ratings-salary">' + (salaryMid||'—') + '</div>';
+      }
+    } else {
+      html += '<div class="ratings-salary" style="display:none"></div>';
+    }
+    html += '</div>';
+  });
+  return html;
+}
+
+(function loadRatings() {
+  fetch('ratings.json?_=' + Date.now())
+    .then(function(r) { return r.ok ? r.json() : null; })
+    .then(function(d) {
+      if (!d || !d.enabled) return;
+      _ratingsData = d;
+
+      // Populate panel
+      var dateEl  = document.getElementById('ratings-date');
+      var srcEl   = document.getElementById('ratings-source');
+      var methEl  = document.getElementById('ratings-methodology');
+      var rowsEl  = document.getElementById('ratings-rows');
+      if (dateEl)  dateEl.textContent  = d.evaluated || '—';
+      if (srcEl)   srcEl.textContent   = d.source || '—';
+      if (methEl)  methEl.textContent  = d.methodology || '—';
+      if (rowsEl)  rowsEl.innerHTML    = buildRatingsRows(d);
+
+      // Show trigger button
+      var trigger = document.getElementById('ratings-trigger');
+      if (trigger) trigger.style.display = 'flex';
+    })
+    .catch(function() { /* no ratings.json or disabled — silent */ });
+})();
+
+function toggleRatings() {
+  _ratingsOpen = !_ratingsOpen;
+  var profile = document.getElementById('hero-profile');
+  var panel   = document.getElementById('ratings-panel');
+  var trigger = document.getElementById('ratings-trigger');
+  var avatar  = document.querySelector('.hero-avatar');
+
+  if (_ratingsOpen) {
+    if (profile) profile.classList.add('faded');
+    if (panel)   panel.classList.add('visible');
+    if (avatar)  avatar.classList.add('faded');
+    if (trigger) trigger.textContent = '✕  Close evaluation';
+  } else {
+    if (profile) profile.classList.remove('faded');
+    if (panel)   panel.classList.remove('visible');
+    if (avatar)  avatar.classList.remove('faded');
+    if (trigger) trigger.textContent = '◎  View AI Evaluation →';
+  }
+}
+
+// ══════════════════════════════════════════════════════════════════════════
+// MAINTENANCE.JSON LOADER
+// Fetch maintenance.json — if enabled:true show overlay and block the page.
+// Format: { "enabled": true, "env": "github", "message": "optional override" }
+// ══════════════════════════════════════════════════════════════════════════
+(function loadMaintenance() {
+  fetch('maintenance.json?_=' + Date.now())
+    .then(function(r) { return r.ok ? r.json() : null; })
+    .then(function(d) {
+      if (!d || !d.enabled) return;
+      var overlay = document.getElementById('maintenance-overlay');
+      var envTag  = document.getElementById('maint-env-tag');
+      if (envTag)  envTag.textContent  = d.env || 'maintenance';
+      if (overlay) overlay.classList.add('active');
+      // Prevent scrolling while in maintenance mode
+      document.body.style.overflow = 'hidden';
+    })
+    .catch(function() { /* no maintenance.json = site is up */ });
+})();
+
+// ══════════════════════════════════════════════════════════════════════════
+// FREELANCE.JSON LOADER
+// Shows/hides the "Available for freelance" badge in the hero.
+// Format: { "enabled": true, "message": "· Available for freelance engagements ·" }
+// Set enabled: false to hide the badge entirely (e.g. when fully booked).
+// The message field is optional — defaults to the standard text if omitted.
+// ══════════════════════════════════════════════════════════════════════════
+(function loadFreelance() {
+  fetch('freelance.json?_=' + Date.now())
+    .then(function(r) { return r.ok ? r.json() : null; })
+    .then(function(d) {
+      var badge = document.getElementById('freelance-badge');
+      if (!badge) return;
+      if (!d || !d.enabled) return; // hidden by default — only show if enabled
+      badge.textContent = d.message || '· Available for freelance engagements ·';
+      badge.style.display = '';
+    })
+    .catch(function() { /* no freelance.json — badge stays hidden */ });
+})();
+
+
+// Fetch banner.json — if enabled:true show the environment banner.
+// Format: { "enabled": true, "env": "github|prod|qa|test", "message": "..." }
+// env colours: github=cyan, prod=green, qa=amber, test=red
+// ══════════════════════════════════════════════════════════════════════════
+(function loadBanner() {
+  fetch('banner.json?_=' + Date.now())
+    .then(function(r) { return r.ok ? r.json() : null; })
+    .then(function(d) {
+      if (!d || !d.enabled) return;
+      var banner  = document.getElementById('site-banner');
+      var envTag  = document.getElementById('banner-env-tag');
+      var msgEl   = document.getElementById('banner-msg');
+      var updEl   = document.getElementById('banner-updated');
+      if (!banner) return;
+      if (envTag) envTag.textContent = d.env || 'env';
+      if (msgEl)  msgEl.textContent  = d.message || '';
+      // lastupdated is optional — shown only when present and non-empty
+      if (updEl && d.lastupdated) {
+        updEl.textContent  = '· updated ' + d.lastupdated;
+        updEl.style.display = '';
+      }
+      banner.className = ''; // reset
+      banner.id = 'site-banner'; // keep id
+      banner.classList.add('env-' + (d.env || 'github'));
+      banner.style.display = 'flex';
+      document.body.classList.add('has-banner');
+    })
+    .catch(function() { /* no banner.json — silent */ });
+})();
+
+// ══════════════════════════════════════════════════════════════════════════
+// SKELETON DISMISS
+// ══════════════════════════════════════════════════════════════════════════
+window.addEventListener('load', function() {
+  var sk = document.getElementById('skeleton-overlay');
+  if (sk) {
+    sk.classList.add('hidden');
+    setTimeout(function() { sk.style.display = 'none'; }, 500);
+  }
+});
+
+// ══════════════════════════════════════════════════════════════════════════
+// NAV
+// ══════════════════════════════════════════════════════════════════════════
+function toggleNav() {
+  var btn   = document.getElementById('hamburger');
+  var links = document.getElementById('nav-links');
+  if (!btn || !links) return;
+  btn.classList.toggle('open');
+  links.classList.toggle('open');
+}
+function closeNav() {
+  var btn   = document.getElementById('hamburger');
+  var links = document.getElementById('nav-links');
+  if (btn)   btn.classList.remove('open');
+  if (links) links.classList.remove('open');
+  document.querySelectorAll('.nav-item.dd-open').forEach(function(li) {
+    li.classList.remove('dd-open');
+  });
+}
+function toggleMobileDropdown(li) {
+  if (window.innerWidth > 768) return;
+  li.classList.toggle('mobile-open');
+}
+
+// ── Desktop dropdowns: JS mouseenter/leave — resize-safe ──────────────────
+// Replaces CSS :hover so window resize can't strand a dropdown open.
+var ddTimers = {};
+(function initDropdowns() {
+  document.querySelectorAll('.nav-item').forEach(function(li, idx) {
+    if (!li.querySelector('.dropdown-menu')) return;
+    li.addEventListener('mouseenter', function() {
+      if (window.innerWidth <= 768) return;
+      clearTimeout(ddTimers[idx]);
+      document.querySelectorAll('.nav-item.dd-open').forEach(function(o) {
+        if (o !== li) o.classList.remove('dd-open');
+      });
+      li.classList.add('dd-open');
+    });
+    li.addEventListener('mouseleave', function() {
+      if (window.innerWidth <= 768) return;
+      ddTimers[idx] = setTimeout(function() {
+        li.classList.remove('dd-open');
+      }, 80);
+    });
+  });
+
+  // Close all on resize — prevents stuck-open state after window resize
+  window.addEventListener('resize', function() {
+    document.querySelectorAll('.nav-item.dd-open').forEach(function(li) {
+      li.classList.remove('dd-open');
+    });
+  }, { passive: true });
+
+  // Close on outside click
+  document.addEventListener('click', function(e) {
+    var btn   = document.getElementById('hamburger');
+    var links = document.getElementById('nav-links');
+    if (btn && links && !btn.contains(e.target) && !links.contains(e.target)) {
+      btn.classList.remove('open');
+      links.classList.remove('open');
+    }
+    if (!e.target.closest || !e.target.closest('.nav-item')) {
+      document.querySelectorAll('.nav-item.dd-open').forEach(function(li) {
+        li.classList.remove('dd-open');
+      });
+    }
+  });
+
+  // Close nav on plain link click
+  document.querySelectorAll('.nav-links a').forEach(function(a) {
+    a.addEventListener('click', function() {
+      var li = a.closest('.nav-item');
+      if (li && li.querySelector('.dropdown-menu')) return;
+      closeNav();
+    });
+  });
+})();
+
+// ══════════════════════════════════════════════════════════════════════════
+// TYPING ANIMATION
+// ══════════════════════════════════════════════════════════════════════════
+(function() {
+  var text   = 'Endpoint Automation Engineer  ·  South Carolina (Remote)';
+  var el     = document.getElementById('typed-title');
+  var cursor = document.getElementById('typing-cursor');
+  if (!el) return;
+  // Respect reduced motion
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    el.textContent = text;
+    if (cursor) cursor.style.display = 'none';
+    return;
+  }
+  var i = 0;
+  function type() {
+    if (i <= text.length) {
+      el.textContent = text.slice(0, i++);
+      setTimeout(type, 38 + Math.random() * 22);
+    } else {
+      setTimeout(function() { if (cursor) cursor.style.display = 'none'; }, 2000);
+    }
+  }
+  setTimeout(type, 900);
+})();
+
+// ══════════════════════════════════════════════════════════════════════════
+// GLITCH COUNTER ANIMATION
+// ══════════════════════════════════════════════════════════════════════════
+var GLITCH_CHARS = '0123456789!@#$%^&*<>?/\|';
+function glitchReveal(el, finalVal, delay) {
+  if (!el) return;
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    el.textContent = finalVal; return;
+  }
+  el.textContent = '???';
+  setTimeout(function() {
+    var ticks = 0, max = 18;
+    el.classList.add('glitching');
+    var iv = setInterval(function() {
+      if (++ticks < max) {
+        var g = '';
+        for (var j = 0; j < Math.max(finalVal.length, 2); j++)
+          g += GLITCH_CHARS[Math.floor(Math.random() * GLITCH_CHARS.length)];
+        el.textContent = g;
+      } else {
+        clearInterval(iv);
+        el.classList.remove('glitching');
+        el.textContent = finalVal;
+      }
+    }, 55);
+  }, delay);
+}
+setTimeout(function() {
+  glitchReveal(document.getElementById('stat-0'), '12+',   0);
+  glitchReveal(document.getElementById('stat-1'), '1,500', 200);
+  glitchReveal(document.getElementById('stat-2'), '70',    400);
+  glitchReveal(document.getElementById('stat-3'), '<0.1%', 600);
+}, 1400);
+
+// ══════════════════════════════════════════════════════════════════════════
+// SOUND TOGGLE
+// ══════════════════════════════════════════════════════════════════════════
+var soundEnabled = localStorage.getItem('portfolio-sound') !== 'off';
+
+function toggleSound() {
+  soundEnabled = !soundEnabled;
+  localStorage.setItem('portfolio-sound', soundEnabled ? 'on' : 'off');
+  var btn = document.getElementById('sound-toggle');
+  if (!btn) return;
+  btn.classList.toggle('active', soundEnabled);
+  var on  = btn.querySelector('.sound-on');
+  var off = btn.querySelector('.sound-off');
+  if (on)  on.style.display  = soundEnabled ? '' : 'none';
+  if (off) off.style.display = soundEnabled ? 'none' : '';
+  btn.title = soundEnabled ? 'Sounds on — click to mute' : 'Sounds off — click to enable';
+  // Play a confirm click when enabling so user gets immediate feedback
+  if (soundEnabled) playClick();
+}
+
+// Apply saved state on load
+(function() {
+  var btn = document.getElementById('sound-toggle');
+  if (!btn) return;
+  btn.classList.toggle('active', soundEnabled);
+  var on  = btn.querySelector('.sound-on');
+  var off = btn.querySelector('.sound-off');
+  if (on)  on.style.display  = soundEnabled ? '' : 'none';
+  if (off) off.style.display = soundEnabled ? 'none' : '';
+  btn.title = soundEnabled ? 'Sounds on — click to mute' : 'Sounds off — click to enable';
+})();
+
+// ══════════════════════════════════════════════════════════════════════════
+// SKILL CLICK SOUND
+// ══════════════════════════════════════════════════════════════════════════
+var audioCtx = null;
+function getAudioCtx() {
+  if (!audioCtx) {
+    try { audioCtx = new (window.AudioContext || window.webkitAudioContext)(); } catch(e) {}
+  }
+  return audioCtx;
+}
+function playClick() {
+  if (!soundEnabled) return;
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  var ctx = getAudioCtx();
+  if (!ctx) return;
+  var osc = ctx.createOscillator(), gain = ctx.createGain();
+  osc.connect(gain); gain.connect(ctx.destination);
+  osc.type = 'sine';
+  osc.frequency.setValueAtTime(880, ctx.currentTime);
+  osc.frequency.exponentialRampToValueAtTime(440, ctx.currentTime + 0.06);
+  gain.gain.setValueAtTime(0.08, ctx.currentTime);
+  gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.08);
+  osc.start(ctx.currentTime);
+  osc.stop(ctx.currentTime + 0.08);
+}
+document.querySelectorAll('.skill-tag').forEach(function(tag) {
+  tag.setAttribute('tabindex', '0'); // keyboard accessible
+  tag.setAttribute('role', 'listitem');
+  tag.addEventListener('mouseenter', function() {
+    playClick();
+    tag.classList.add('clicked');
+    setTimeout(function() { tag.classList.remove('clicked'); }, 200);
+  });
+  tag.addEventListener('focus', function() { playClick(); });
+});
+
+// ══════════════════════════════════════════════════════════════════════════
+// CONTACT FORM
+// ══════════════════════════════════════════════════════════════════════════
+function sendContact(e) {
+  e.preventDefault();
+  var name    = document.getElementById('c-name').value.trim();
+  var email   = document.getElementById('c-email').value.trim();
+  var subject = document.getElementById('c-subject').value.trim() || 'Portfolio enquiry';
+  var msg     = document.getElementById('c-msg').value.trim();
+  var status  = document.getElementById('form-status');
+
+  if (!name || !email || !msg) {
+    status.className = 'form-status err';
+    status.textContent = 'Please fill in all required fields.';
+    return;
+  }
+
+  // Uses email from email.json if loaded, falls back to hardcoded value
+  var to = window._portfolioEmail || 'william.gordon.portfolio@gmail.com';
+
+  var body = 'Name: ' + name + '\nFrom: ' + email + '\n\n' + msg;
+  window.location.href = 'mailto:' + to +
+    '?subject=' + encodeURIComponent('[Portfolio] ' + subject) +
+    '&body='    + encodeURIComponent(body);
+
+  status.className = 'form-status ok';
+  status.textContent = '✓ Opening your email client...';
+  setTimeout(function() { status.textContent = ''; }, 4000);
+}
+
+// ══════════════════════════════════════════════════════════════════════════
+// SCROLL REVEAL + NAV HIGHLIGHT
+// ══════════════════════════════════════════════════════════════════════════
+(function() {
+  var observer = new IntersectionObserver(function(entries) {
+    entries.forEach(function(e) {
+      if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); }
+    });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.reveal').forEach(function(el) { observer.observe(el); });
+
+  var sections = document.querySelectorAll('section[id]');
+  var navLinks = document.querySelectorAll('.nav-links a');
+  window.addEventListener('scroll', function() {
+    var pos = window.scrollY + 80;
+    sections.forEach(function(s) {
+      var id = s.getAttribute('id');
+      navLinks.forEach(function(a) {
+        if (a.getAttribute('href') === '#' + id)
+          a.style.color = (pos >= s.offsetTop && pos < s.offsetTop + s.offsetHeight) ? 'var(--accent)' : '';
+      });
+    });
+  }, { passive: true });
+})();
+</script>
 
 </body>
 </html>
