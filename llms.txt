@@ -28,8 +28,8 @@ deployment, infrastructure consulting, and self-hosted tooling.
 - Network Systems Management — Associate Degree, Midlands Technical College
 
 ## Live Projects
-- ip-saas: Self-hosted public IP lookup API — https://ipme.dmsk.duckdns.org/
-- uptime-saas: Self-hosted uptime monitoring dashboard — https://uptime.dmsk.duckdns.org/
+- ip-saas: Self-hosted public IP lookup API — https://ip.williammgordon.com/
+- uptime-saas: Self-hosted uptime monitoring dashboard — https://uptime.williammgordon.com/
 
 ## Skills
 Microsoft Intune, Windows Autopilot, PowerShell, Power Automate, Azure AD,
