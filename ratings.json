@@ -1,5 +1,5 @@
 {
-  "enabled": true,
+  "enabled": false,
   "evaluated": "June 2026",
   "source": "Glassdoor 2026 (US national averages)",
   "methodology": "Same portfolio brief and role comparison prompt submitted independently to each AI model. Scores reflect portfolio effectiveness for each role on a 1-10 scale.",
