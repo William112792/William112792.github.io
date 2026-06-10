@@ -1,0 +1,175 @@
+{
+  "enabled": true,
+  "evaluated": "June 2026",
+  "source": "Glassdoor 2026 (US national averages)",
+  "methodology": "Same portfolio brief and role comparison prompt submitted independently to each AI model. Scores reflect portfolio effectiveness for each role on a 1-10 scale.",
+  "display": {
+    "mode": "top_rated",
+    "count": 6,
+    "show_salary": true
+  },
+  "roles": [
+    {
+      "id": "endpoint_admin",
+      "role": "Endpoint Administrator",
+      "show": true,
+      "salary": {
+        "low":  81188,
+        "mid":  103050,
+        "high": 131866,
+        "source": "Glassdoor May 2026",
+        "url": "https://www.glassdoor.com/Salaries/endpoint-administrator-salary-SRCH_KO0,22.htm"
+      },
+      "scores": {
+        "claude":   9.8,
+        "chatgpt":  null,
+        "gemini":   null,
+        "deepseek": null
+      }
+    },
+    {
+      "id": "automation_architect",
+      "role": "Automation Architect",
+      "show": true,
+      "salary": {
+        "low":  104669,
+        "mid":  129794,
+        "high": 162270,
+        "source": "Glassdoor May 2026 (Network Automation Engineer — closest match)",
+        "url": "https://www.glassdoor.com/Salaries/network-automation-engineer-salary-SRCH_KO0,27.htm"
+      },
+      "scores": {
+        "claude":   9.0,
+        "chatgpt":  null,
+        "gemini":   null,
+        "deepseek": null
+      }
+    },
+    {
+      "id": "solutions_architect",
+      "role": "Solutions Architect",
+      "show": true,
+      "salary": {
+        "low":  175945,
+        "mid":  217460,
+        "high": 272919,
+        "source": "Glassdoor May 2026",
+        "url": "https://www.glassdoor.com/Salaries/solutions-architect-salary-SRCH_KO0,19.htm"
+      },
+      "scores": {
+        "claude":   8.0,
+        "chatgpt":  null,
+        "gemini":   null,
+        "deepseek": null
+      }
+    },
+    {
+      "id": "professional_consultant",
+      "role": "Professional Consultant",
+      "show": true,
+      "salary": {
+        "low":  113913,
+        "mid":  143642,
+        "high": 182880,
+        "source": "Glassdoor IT Consultant/Senior IT Consultant April 2026",
+        "url": "https://www.glassdoor.com/Salaries/it-consultant-senior-it-consultant-salary-SRCH_KO0,34.htm"
+      },
+      "scores": {
+        "claude":   8.5,
+        "chatgpt":  null,
+        "gemini":   null,
+        "deepseek": null
+      }
+    },
+    {
+      "id": "msp",
+      "role": "MSP Engineer",
+      "show": true,
+      "salary": {
+        "low":  142477,
+        "mid":  179096,
+        "high": 228954,
+        "source": "Glassdoor May 2026",
+        "url": "https://www.glassdoor.com/Salaries/msp-engineer-salary-SRCH_KO0,12.htm"
+      },
+      "scores": {
+        "claude":   8.0,
+        "chatgpt":  null,
+        "gemini":   null,
+        "deepseek": null
+      }
+    },
+    {
+      "id": "azure_admin",
+      "role": "Azure Administrator",
+      "show": true,
+      "salary": {
+        "low":  129624,
+        "mid":  163351,
+        "high": 208536,
+        "source": "Glassdoor May 2026",
+        "url": "https://www.glassdoor.com/Salaries/azure-administrator-salary-SRCH_KO0,19.htm"
+      },
+      "scores": {
+        "claude":   7.5,
+        "chatgpt":  null,
+        "gemini":   null,
+        "deepseek": null
+      }
+    },
+    {
+      "id": "saas_developer",
+      "role": "SaaS Developer",
+      "show": true,
+      "salary": {
+        "low":  120685,
+        "mid":  158183,
+        "high": 210792,
+        "source": "Glassdoor February 2026",
+        "url": "https://www.glassdoor.com/Salaries/saas-developer-salary-SRCH_KO0,14.htm"
+      },
+      "scores": {
+        "claude":   7.0,
+        "chatgpt":  null,
+        "gemini":   null,
+        "deepseek": null
+      }
+    },
+    {
+      "id": "network_engineer",
+      "role": "Network Engineer",
+      "show": true,
+      "salary": {
+        "low":  110600,
+        "mid":  119400,
+        "high": 144100,
+        "source": "Motion Recruitment 2026",
+        "url": "https://motionrecruitment.com/it-salary/network-engineer"
+      },
+      "scores": {
+        "claude":   5.5,
+        "chatgpt":  null,
+        "gemini":   null,
+        "deepseek": null
+      }
+    },
+    {
+      "id": "csp",
+      "role": "Cloud Solution Provider (CSP)",
+      "show": true,
+      "salary": {
+        "low":  174606,
+        "mid":  214207,
+        "high": 266709,
+        "source": "Glassdoor Azure Solution Architect May 2026",
+        "url": "https://www.glassdoor.com/Salaries/us-azure-solutions-architect-salary-SRCH_IL.0,2_IN1_KO3,28.htm"
+      },
+      "scores": {
+        "claude":   6.0,
+        "chatgpt":  null,
+        "gemini":   null,
+        "deepseek": null
+      }
+    }
+  ]
+}

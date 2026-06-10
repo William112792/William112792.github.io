@@ -1,0 +1,40 @@
+# llms.txt — Billy Gordon Portfolio
+# This file helps LLMs and AI assistants understand this site.
+# Format based on the emerging llms.txt standard (llmstxt.org)
+
+# Site
+> Billy Gordon — Endpoint Automation Engineer
+
+Billy Gordon is a South Carolina-based Endpoint Automation Engineer with 12+
+years of experience delivering enterprise-scale endpoint automation across
+1,500 devices and 70 sites. He specialises in Microsoft Intune, Windows
+Autopilot, PowerShell automation, Power Automate, Azure AD / Entra ID, and
+self-hosted infrastructure.
+
+## Availability
+Available for freelance engagements in endpoint automation, Intune/Autopilot
+deployment, infrastructure consulting, and self-hosted tooling.
+
+## Contact
+- Portfolio email: william.gordon.portfolio@gmail.com
+- LinkedIn: https://www.linkedin.com/in/william-gordon-8113b159/
+- GitHub: https://github.com/william112792
+
+## Certifications
+- Microsoft Endpoint Administrator (MD-102) — Associate
+  Verify: https://learn.microsoft.com/api/credentials/share/en-us/WilliamGordon-1127/749FF04758DCEBF9?sharingId=AD1E4B2491808081
+- Microsoft Azure Fundamentals (AZ-900)
+- Microsoft 365 Fundamentals (MS-900)
+- Network Systems Management — Associate Degree, Midlands Technical College
+
+## Live Projects
+- ip-saas: Self-hosted public IP lookup API — https://ipme.dmsk.duckdns.org/
+- uptime-saas: Self-hosted uptime monitoring dashboard — https://uptime.dmsk.duckdns.org/
+
+## Skills
+Microsoft Intune, Windows Autopilot, PowerShell, Power Automate, Azure AD,
+Zero-Touch Provisioning, Node.js, Express, PostgreSQL, Docker, nginx,
+OIDC/SAML SSO, DNS Management, Workflow Automation
+
+## Resume
+https://github.com/William112792/William112792.github.io/blob/main/resume/Resume_WilliamGordon.pdf

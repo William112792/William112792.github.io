@@ -1,0 +1,52 @@
+# robots.txt — Billy Gordon Portfolio
+# https://william112792.github.io/
+
+User-agent: *
+Allow: /
+Disallow: /banner.json
+Disallow: /maintenance.json
+Disallow: /freelance.json
+Disallow: /email.json
+Disallow: /ratings.json
+
+# Sitemap
+Sitemap: https://william112792.github.io/sitemap.xml
+
+# LLM / AI crawlers — allow indexing but exclude JSON config files
+User-agent: GPTBot
+Allow: /
+Disallow: /banner.json
+Disallow: /maintenance.json
+Disallow: /freelance.json
+Disallow: /email.json
+Disallow: /ratings.json
+
+User-agent: ClaudeBot
+Allow: /
+Disallow: /banner.json
+Disallow: /maintenance.json
+Disallow: /freelance.json
+Disallow: /email.json
+Disallow: /ratings.json
+
+User-agent: anthropic-ai
+Allow: /
+Disallow: /banner.json
+Disallow: /maintenance.json
+Disallow: /freelance.json
+Disallow: /email.json
+Disallow: /ratings.json
+
+User-agent: PerplexityBot
+Allow: /
+Disallow: /banner.json
+Disallow: /maintenance.json
+Disallow: /freelance.json
+Disallow: /email.json
+Disallow: /ratings.json
+
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
