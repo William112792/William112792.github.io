@@ -1,4 +1,47 @@
 {
   "enabled": false,
-  "message": "· Available for consultation and freelance engagements ·"
+  "pricing": false,
+  "message": "\u00b7 Available for consultation and freelance engagements \u00b7",
+  "gigs": [
+    {
+      "title": "Windows Autopilot & Intune Setup",
+      "sub": "Zero-Touch Provisioning \u00b7 MD-102 Certified",
+      "image": "gig/AutoPilotZeroTouch.png",
+      "url": "https://www.fiverr.com/william112792",
+      "price": "From $150",
+      "show": false
+    },
+    {
+      "title": "Hybrid AD & Entra Connect",
+      "sub": "Active Directory \u00b7 Azure AD \u00b7 Intune",
+      "image": "gig/HybridADandEntraConnect.png",
+      "url": "https://www.fiverr.com/william112792",
+      "price": "From $125",
+      "show": false
+    },
+    {
+      "title": "Intune App Deployment",
+      "sub": "Win32 \u00b7 MSI \u00b7 EXE \u00b7 MSIX \u00b7 MD-102 Certified",
+      "image": "gig/IntuneAppDeployment.png",
+      "url": "https://www.fiverr.com/william112792",
+      "price": "From $75",
+      "show": false
+    },
+    {
+      "title": "PowerShell Automation",
+      "sub": "Microsoft 365 \u00b7 Intune \u00b7 Active Directory",
+      "image": "gig/PowershellAutomation.png",
+      "url": "https://www.fiverr.com/william112792",
+      "price": "From $85",
+      "show": false
+    },
+    {
+      "title": "Website Uptime Monitoring",
+      "sub": "Self-Hosted \u00b7 Instant Alerts \u00b7 Node.js",
+      "image": "gig/UptimeMonitoring.png",
+      "url": "https://www.fiverr.com/william112792",
+      "price": "From $30",
+      "show": false
+    }
+  ]
 }

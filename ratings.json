@@ -1,8 +1,8 @@
 {
-  "enabled": false,
+  "enabled": true,
   "evaluated": "June 2026",
   "source": "Glassdoor 2026 (US national averages)",
-  "methodology": "Same portfolio brief and role comparison prompt submitted independently to each AI model. Scores reflect portfolio effectiveness for each role on a 1-10 scale.",
+  "methodology": "Same portfolio brief and role comparison prompt submitted independently to each AI model in a fresh session. Scores reflect portfolio effectiveness for each role on a 1-10 scale. Best score taken across production and test site evaluations. Claude = Sonnet 4.6; DeepSeek self-identified as gpt-4-turbo (known model name hallucination).",
   "display": {
     "mode": "top_rated",
     "count": 6,
@@ -14,17 +14,23 @@
       "role": "Endpoint Administrator",
       "show": true,
       "salary": {
-        "low":  81188,
-        "mid":  103050,
+        "low": 81188,
+        "mid": 103050,
         "high": 131866,
         "source": "Glassdoor May 2026",
         "url": "https://www.glassdoor.com/Salaries/endpoint-administrator-salary-SRCH_KO0,22.htm"
       },
       "scores": {
-        "claude":   9.8,
-        "chatgpt":  null,
-        "gemini":   null,
-        "deepseek": null
+        "claude": 9.7,
+        "chatgpt": 9.9,
+        "gemini": 10.0,
+        "deepseek": 9.5
+      },
+      "notes": {
+        "claude": "11+ years managing 1,500 devices across 70 sites with a verified MD-102 certification, Autopilot/Intune case studies, and <0.1% non-compliance rate directly demonstrate elite endpoint administration capability.",
+        "chatgpt": "The portfolio directly demonstrates large-scale Intune, Autopilot, endpoint compliance, remediation scripting, provisioning automation, and measurable enterprise endpoint outcomes.",
+        "gemini": "The portfolio perfectly aligns with this role, showcasing 11+ years of experience, a relevant MD-102 certification, and massive scale Intune and Autopilot deployments.",
+        "deepseek": "Portfolio demonstrates comprehensive endpoint management expertise with Microsoft Intune, SCCM, Windows Autopilot, and Azure Virtual Desktop across multiple case studies and certifications."
       }
     },
     {
@@ -32,35 +38,23 @@
       "role": "Automation Architect",
       "show": true,
       "salary": {
-        "low":  104669,
-        "mid":  129794,
+        "low": 104669,
+        "mid": 129794,
         "high": 162270,
-        "source": "Glassdoor May 2026 (Network Automation Engineer — closest match)",
+        "source": "Glassdoor May 2026 (Network Automation Engineer \u2014 closest match)",
         "url": "https://www.glassdoor.com/Salaries/network-automation-engineer-salary-SRCH_KO0,27.htm"
       },
       "scores": {
-        "claude":   9.0,
-        "chatgpt":  null,
-        "gemini":   null,
-        "deepseek": null
-      }
-    },
-    {
-      "id": "solutions_architect",
-      "role": "Solutions Architect",
-      "show": true,
-      "salary": {
-        "low":  175945,
-        "mid":  217460,
-        "high": 272919,
-        "source": "Glassdoor May 2026",
-        "url": "https://www.glassdoor.com/Salaries/solutions-architect-salary-SRCH_KO0,19.htm"
+        "claude": 9.2,
+        "chatgpt": 9.7,
+        "gemini": 9.5,
+        "deepseek": 9.0
       },
-      "scores": {
-        "claude":   8.0,
-        "chatgpt":  null,
-        "gemini":   null,
-        "deepseek": null
+      "notes": {
+        "claude": "Deep, documented automation across PowerShell remediation frameworks, zero-touch provisioning pipelines, Power Automate user lifecycle workflows, and AI-assisted log analysis collectively show strong architectural automation thinking at scale.",
+        "chatgpt": "Extensive PowerShell, Power Automate, lifecycle automation, remediation frameworks, onboarding automation, and operational workflow design strongly support automation architecture responsibilities.",
+        "gemini": "Strong fit demonstrated through extensive case studies on zero-touch provisioning, PowerShell remediation, and automated lifecycle management workflows.",
+        "deepseek": "Strong PowerShell scripting, Terraform deployments, and automated provisioning workflows showcased in live deployments section with clear infrastructure-as-code examples."
       }
     },
     {
@@ -68,17 +62,23 @@
       "role": "Professional Consultant",
       "show": true,
       "salary": {
-        "low":  113913,
-        "mid":  143642,
+        "low": 113913,
+        "mid": 143642,
         "high": 182880,
         "source": "Glassdoor IT Consultant/Senior IT Consultant April 2026",
         "url": "https://www.glassdoor.com/Salaries/it-consultant-senior-it-consultant-salary-SRCH_KO0,34.htm"
       },
       "scores": {
-        "claude":   8.5,
-        "chatgpt":  null,
-        "gemini":   null,
-        "deepseek": null
+        "claude": 8.5,
+        "chatgpt": 9.1,
+        "gemini": 8.5,
+        "deepseek": 8.5
+      },
+      "notes": {
+        "claude": "Structured session types with clear pricing, documented case studies with measurable outcomes, Fiverr presence, and a discovery-call-first model all signal a consultant-ready posture.",
+        "chatgpt": "The combination of measurable business outcomes, case studies, service offerings, audits, and consultation packages supports credibility as an independent IT consultant.",
+        "gemini": "Highly suitable due to well-documented case studies, clear freelance service offerings, and a demonstrated ability to solve complex organizational IT challenges.",
+        "deepseek": "Session types, case studies, and professional presentation effectively position Gordon as a knowledgeable consultant with direct client engagement experience and clear service offerings."
       }
     },
     {
@@ -86,17 +86,47 @@
       "role": "MSP Engineer",
       "show": true,
       "salary": {
-        "low":  142477,
-        "mid":  179096,
+        "low": 142477,
+        "mid": 179096,
         "high": 228954,
         "source": "Glassdoor May 2026",
         "url": "https://www.glassdoor.com/Salaries/msp-engineer-salary-SRCH_KO0,12.htm"
       },
       "scores": {
-        "claude":   8.0,
-        "chatgpt":  null,
-        "gemini":   null,
-        "deepseek": null
+        "claude": 7.8,
+        "chatgpt": 8.9,
+        "gemini": 9.0,
+        "deepseek": 9.0
+      },
+      "notes": {
+        "claude": "Demonstrated RMM tool experience (ConnectWise Automate, Samanage), multi-site deployment across ~40-70 locations, ticketing system migrations, and high-volume ticket throughput (~160/week) reflect genuine MSP-adjacent operational experience.",
+        "chatgpt": "Strong evidence of endpoint management, automation, monitoring, ticketing, onboarding, remediation, and multi-site support aligns well with advanced MSP engineering work.",
+        "gemini": "Excellent fit evidenced by experience with ConnectWise Automate, ticketing system migrations, and managing compliance across 1,500 devices at 70 locations.",
+        "deepseek": "Multi-tenant management experience evident through Intune administration, automated deployments, and scalable endpoint solutions that directly align with managed service provider requirements."
+      }
+    },
+    {
+      "id": "solutions_architect",
+      "role": "Solutions Architect",
+      "show": true,
+      "salary": {
+        "low": 175945,
+        "mid": 217460,
+        "high": 272919,
+        "source": "Glassdoor May 2026",
+        "url": "https://www.glassdoor.com/Salaries/solutions-architect-salary-SRCH_KO0,19.htm"
+      },
+      "scores": {
+        "claude": 7.2,
+        "chatgpt": 8.6,
+        "gemini": 7.5,
+        "deepseek": 7.5
+      },
+      "notes": {
+        "claude": "Portfolio shows end-to-end solution design across identity, endpoint, and infrastructure layers, though there is limited cloud-native or multi-platform breadth beyond the Microsoft ecosystem.",
+        "chatgpt": "Shows strong cross-domain design experience spanning endpoint management, identity, automation, SaaS applications, and infrastructure, though enterprise architecture artifacts are limited.",
+        "gemini": "Shows strong capability in designing Microsoft-centric endpoint and identity solutions, though evidence of broader enterprise architecture outside of this ecosystem is less prominent.",
+        "deepseek": "Demonstrates solid technical breadth across endpoint, cloud, and automation domains but portfolio focuses more on implementation than high-level enterprise architecture design patterns."
       }
     },
     {
@@ -104,17 +134,23 @@
       "role": "Azure Administrator",
       "show": true,
       "salary": {
-        "low":  129624,
-        "mid":  163351,
+        "low": 129624,
+        "mid": 163351,
         "high": 208536,
         "source": "Glassdoor May 2026",
         "url": "https://www.glassdoor.com/Salaries/azure-administrator-salary-SRCH_KO0,19.htm"
       },
       "scores": {
-        "claude":   7.5,
-        "chatgpt":  null,
-        "gemini":   null,
-        "deepseek": null
+        "claude": 7.4,
+        "chatgpt": 8.2,
+        "gemini": 8.0,
+        "deepseek": 8.0
+      },
+      "notes": {
+        "claude": "Hybrid Azure AD join, Entra Connect sync, Intune MDM policy migration, and Entra ID SSO integration show solid Azure identity and endpoint management, though dedicated Azure infrastructure administration (VMs, networking, subscriptions) is not evidenced.",
+        "chatgpt": "Azure AD, Entra ID, hybrid identity, Intune, Autopilot, OIDC, SAML, and Microsoft Graph experience are clearly demonstrated, though broader Azure infrastructure administration is less visible.",
+        "gemini": "Strong fit for the identity and device management aspects of Azure given Entra ID and Intune experience, though general Azure IaaS/PaaS administration is less emphasized.",
+        "deepseek": "Competent in Entra ID/Azure AD, Entra Connect sync, OIDC/SAML SSO, and Intune, but lacks Azure-native services like VMs, storage accounts, or Azure Policy."
       }
     },
     {
@@ -122,35 +158,23 @@
       "role": "SaaS Developer",
       "show": true,
       "salary": {
-        "low":  120685,
-        "mid":  158183,
+        "low": 120685,
+        "mid": 158183,
         "high": 210792,
         "source": "Glassdoor February 2026",
         "url": "https://www.glassdoor.com/Salaries/saas-developer-salary-SRCH_KO0,14.htm"
       },
       "scores": {
-        "claude":   7.0,
-        "chatgpt":  null,
-        "gemini":   null,
-        "deepseek": null
-      }
-    },
-    {
-      "id": "network_engineer",
-      "role": "Network Engineer",
-      "show": true,
-      "salary": {
-        "low":  110600,
-        "mid":  119400,
-        "high": 144100,
-        "source": "Motion Recruitment 2026",
-        "url": "https://motionrecruitment.com/it-salary/network-engineer"
+        "claude": 6.5,
+        "chatgpt": 8.8,
+        "gemini": 7.5,
+        "deepseek": 7.0
       },
-      "scores": {
-        "claude":   5.5,
-        "chatgpt":  null,
-        "gemini":   null,
-        "deepseek": null
+      "notes": {
+        "claude": "Three self-hosted, live SaaS tools (ip-saas, uptime-saas, secret-saas) built with Node.js, PostgreSQL, Docker, and nginx demonstrate real development capability, though the portfolio is not primarily dev-focused.",
+        "chatgpt": "Live Node.js, Express, PostgreSQL, Docker, nginx, authentication, monitoring, and certificate-management platforms provide strong evidence of practical SaaS development and deployment skills.",
+        "gemini": "Demonstrates capable full-stack development skills with live Node.js and PostgreSQL projects, but this serves as a secondary skill set rather than the primary career focus.",
+        "deepseek": "Built and self-hosted three functional SaaS apps (IP lookup, uptime, secret tracker) with Node.js/PostgreSQL, but frontend complexity and development lifecycle depth are limited."
       }
     },
     {
@@ -158,17 +182,47 @@
       "role": "Cloud Solution Provider (CSP)",
       "show": true,
       "salary": {
-        "low":  174606,
-        "mid":  214207,
+        "low": 174606,
+        "mid": 214207,
         "high": 266709,
         "source": "Glassdoor Azure Solution Architect May 2026",
         "url": "https://www.glassdoor.com/Salaries/us-azure-solutions-architect-salary-SRCH_IL.0,2_IN1_KO3,28.htm"
       },
       "scores": {
-        "claude":   6.0,
-        "chatgpt":  null,
-        "gemini":   null,
-        "deepseek": null
+        "claude": 6.0,
+        "chatgpt": 7.8,
+        "gemini": 6.5,
+        "deepseek": 6.0
+      },
+      "notes": {
+        "claude": "Microsoft Entra ID, Intune, Autopilot, and hybrid identity work align with CSP delivery capabilities, but the portfolio lacks evidence of Microsoft partner licensing, tenant management for multiple customers, or CSP-specific billing/provisioning workflows.",
+        "chatgpt": "Cloud identity, endpoint management, SaaS delivery, SSO integration, and self-hosted services demonstrate cloud solution experience, though broader cloud service provider operations and multi-cloud architecture are not extensively showcased.",
+        "gemini": "While highly skilled in Microsoft 365 provisioning, the portfolio does not highlight experience in multi-tenant CSP billing, sales, or centralized management.",
+        "deepseek": "Microsoft cloud service delivery experience with Intune and Azure AD is relevant but portfolio lacks broader CSP business model, licensing, or multi-cloud solution provider evidence."
+      }
+    },
+    {
+      "id": "network_engineer",
+      "role": "Network Engineer",
+      "show": true,
+      "salary": {
+        "low": 110600,
+        "mid": 119400,
+        "high": 144100,
+        "source": "Motion Recruitment 2026",
+        "url": "https://motionrecruitment.com/it-salary/network-engineer"
+      },
+      "scores": {
+        "claude": 5.5,
+        "chatgpt": 7.3,
+        "gemini": 6.5,
+        "deepseek": 5.5
+      },
+      "notes": {
+        "claude": "Multiple Midlands Technical College networking certificates, a layered infrastructure lab, nginx reverse proxy and DNS management skills are present, but the portfolio's core work is endpoint/cloud-focused with no deep network engineering case studies.",
+        "chatgpt": "Networking education, DNS management, infrastructure labs, reverse proxies, and multi-layer infrastructure projects are present, but advanced routing, switching, and network architecture depth is limited.",
+        "gemini": "Moderate fit as the portfolio includes foundational networking degrees and certificates, but the professional experience is heavily skewed toward endpoint management rather than active routing.",
+        "deepseek": "Some DNS management, nginx reverse proxy, and monitoring case study, but no routing protocols, switch/firewall configs, or VLAN evidence shown."
       }
     }
   ]

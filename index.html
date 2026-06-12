@@ -1267,6 +1267,146 @@ footer {
 /* Fiverr placeholder — hidden until Fiverr links are added */
 .contact-fiverr-placeholder { display: none; }
 
+/* ── Fiverr gig flip-card carousel ──────────────────────────────────────── */
+.gig-carousel { max-width: 620px; }
+
+/* 3-D flip stage */
+.gig-stage {
+  perspective: 1200px;
+  width: 100%;
+  aspect-ratio: 16/9;
+  position: relative;
+  cursor: pointer;
+}
+.gig-flip {
+  width: 100%; height: 100%;
+  position: relative;
+  transform-style: preserve-3d;
+  transition: transform 0.65s cubic-bezier(.4,0,.2,1);
+}
+.gig-flip.flipped { transform: rotateY(180deg); }
+
+.gig-face {
+  position: absolute; inset: 0;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  background: var(--bg2);
+  display: flex;
+  flex-direction: column;
+}
+.gig-back { transform: rotateY(180deg); }
+
+/* Scan animation */
+.gig-scan-wrap {
+  position: relative;
+  flex: 0 0 auto;
+  overflow: hidden;
+}
+.gig-img {
+  width: 100%;
+  aspect-ratio: 16/9;
+  object-fit: cover;
+  display: block;
+  filter: brightness(0.92);
+}
+.gig-scan-line {
+  position: absolute;
+  left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(90deg,
+    transparent 0%,
+    rgba(0,229,255,0.08) 20%,
+    rgba(0,229,255,0.55) 50%,
+    rgba(0,229,255,0.08) 80%,
+    transparent 100%
+  );
+  box-shadow: 0 0 14px rgba(0,229,255,0.5);
+  top: 0;
+  animation: gigScan 3.2s ease-in-out infinite;
+  pointer-events: none;
+}
+@keyframes gigScan {
+  0%   { top: 0%;   opacity: 0; }
+  5%   { opacity: 1; }
+  95%  { opacity: 1; }
+  100% { top: 100%; opacity: 0; }
+}
+
+/* Info panel */
+.gig-info {
+  padding: .9rem 1.1rem .75rem;
+  display: flex;
+  flex-direction: column;
+  gap: .25rem;
+  flex: 1;
+  background: linear-gradient(180deg, var(--bg2) 0%, var(--bg3) 100%);
+}
+.gig-info-title {
+  font-family: var(--font-sans);
+  font-size: .95rem;
+  font-weight: 800;
+  color: #fff;
+  line-height: 1.2;
+}
+.gig-info-sub {
+  font-family: var(--font-mono);
+  font-size: .62rem;
+  color: var(--muted);
+  letter-spacing: .04em;
+}
+.gig-info-price {
+  font-family: var(--font-mono);
+  font-size: .75rem;
+  color: var(--accent2);
+  margin-top: .1rem;
+}
+.gig-cta {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: .65rem;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--accent);
+  text-decoration: none;
+  margin-top: auto;
+  padding-top: .4rem;
+  border-top: 1px solid var(--border);
+}
+.gig-cta:hover { color: #fff; text-decoration: none; }
+
+/* Controls */
+.gig-controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: .875rem;
+}
+.gig-nav-btn {
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--muted);
+  font-size: 1rem;
+  width: 34px; height: 34px;
+  cursor: pointer;
+  transition: border-color .15s, color .15s;
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--font-mono);
+}
+.gig-nav-btn:hover { border-color: var(--accent); color: var(--accent); }
+
+.gig-dots { display: flex; gap: .4rem; align-items: center; }
+.gig-dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--border);
+  cursor: pointer;
+  transition: background .2s, transform .2s;
+}
+.gig-dot.active { background: var(--accent); transform: scale(1.3); }
+
 
 /* ── Banner + Maintenance ────────────────────────────────────────────────── */
 #site-banner {
@@ -1822,25 +1962,26 @@ body.has-banner section:not(.hero) { scroll-margin-top: 80px; }
 /* Model column headers */
 .ratings-models {
   display: grid;
-  grid-template-columns: 1fr repeat(4, 44px) 50px;
+  grid-template-columns: 1fr repeat(4, 46px) 46px 46px 58px;
   gap: 0.25rem;
   margin-bottom: 0.4rem;
   padding: 0 0.25rem;
 }
 .ratings-model-label {
   font-family: var(--font-mono);
-  font-size: 0.52rem;
+  font-size: 0.48rem;
   color: var(--muted);
-  letter-spacing: 0.06em;
+  letter-spacing: 0.04em;
   text-align: center;
   text-transform: uppercase;
+  line-height: 1.2;
 }
 .ratings-model-label:first-child { text-align: left; }
 
 /* Each role row */
 .ratings-row {
   display: grid;
-  grid-template-columns: 1fr repeat(4, 44px) 50px;
+  grid-template-columns: 1fr repeat(4, 46px) 46px 46px 58px;
   gap: 0.25rem;
   padding: 0.5rem 0.25rem;
   border-bottom: 1px solid rgba(255,255,255,0.04);
@@ -1868,8 +2009,35 @@ body.has-banner section:not(.hero) { scroll-margin-top: 80px; }
 }
 .ratings-score.high   { color: var(--accent2); }
 .ratings-score.mid    { color: var(--accent3); }
-.ratings-score.low    { color: var(--muted); }
-.ratings-score.none   { color: var(--muted); opacity: 0.4; font-weight: 400; }
+.ratings-score.low    { color: #e08c3a; }
+.ratings-score.none   { color: #4a6080; opacity: 1; font-weight: 700; font-size: 0.85rem; letter-spacing: 0.05em; }
+
+/* Custom tooltip on score cells */
+.ratings-score[data-note] { position: relative; cursor: default; }
+.ratings-score[data-note]::after {
+  content: attr(data-note);
+  position: absolute;
+  bottom: calc(100% + 6px);
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  color: var(--text);
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  line-height: 1.5;
+  padding: 0.4rem 0.6rem;
+  width: 280px;
+  white-space: normal;
+  border-radius: 2px;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.15s;
+  z-index: 100;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.4);
+  text-align: left;
+}
+.ratings-score[data-note]:hover::after { opacity: 1; }
 .ratings-salary {
   font-family: var(--font-mono);
   font-size: 0.56rem;
@@ -1915,8 +2083,8 @@ body.has-banner section:not(.hero) { scroll-margin-top: 80px; }
 [data-theme="noir"]  .ratings-row:hover { background: rgba(122,154,184,0.04); }
 
 @media (max-width: 768px) {
-  .ratings-models { grid-template-columns: 1fr repeat(4, 36px); }
-  .ratings-row    { grid-template-columns: 1fr repeat(4, 36px); }
+  .ratings-models { grid-template-columns: 1fr repeat(4, 38px) 38px 38px; }
+  .ratings-row    { grid-template-columns: 1fr repeat(4, 38px) 38px 38px; }
   .ratings-salary { display: none; }
   .ratings-model-label:last-child { display: none; }
   .ratings-role-name { font-size: 0.58rem; }
@@ -2074,6 +2242,10 @@ body.has-banner section:not(.hero) { scroll-margin-top: 80px; }
           <span class="dropdown-item-name">uptime-saas</span>
           <span class="dropdown-item-meta">Uptime monitoring dashboard · Live</span>
         </a>
+        <a class="dropdown-item" href="https://secret.williammgordon.com/" target="_blank" rel="noopener">
+          <span class="dropdown-item-name">secret-saas</span>
+          <span class="dropdown-item-meta">Secret &amp; cert expiry tracker · 🔒 SSO</span>
+        </a>
       </div>
     </li>
 
@@ -2180,10 +2352,11 @@ body.has-banner section:not(.hero) { scroll-margin-top: 80px; }
       </div>
       <div class="ratings-models">
         <div class="ratings-model-label">Role</div>
-        <div class="ratings-model-label">Claude</div>
-        <div class="ratings-model-label">GPT</div>
-        <div class="ratings-model-label">Gemini</div>
-        <div class="ratings-model-label">Deep&shy;Seek</div>
+        <div class="ratings-model-label" title="Claude Sonnet 4.6 — June 2026">Claude</div>
+        <div class="ratings-model-label" title="GPT-5.5 — June 2026">GPT</div>
+        <div class="ratings-model-label" title="Gemini 2.5 Pro — June 2026">Gemini</div>
+        <div class="ratings-model-label" title="DeepSeek V3 — pending">Deep&shy;Seek</div>
+        <div class="ratings-model-label" title="Average across all scored models" style="color:var(--accent);">Avg</div>
         <div class="ratings-model-label">Salary Mid</div>
       </div>
       <div id="ratings-rows"></div>
@@ -2364,6 +2537,31 @@ body.has-banner section:not(.hero) { scroll-margin-top: 80px; }
       <a href="https://uptime.williammgordon.com/" class="project-link" target="_blank">View demo →</a>
     </div>
 
+    <div class="tool-card reveal reveal-delay-3">
+      <div class="tool-status"><span class="tool-status-dot"></span>Live</div>
+      <div class="tool-name">secret-saas</div>
+      <div class="tool-desc">
+        Self-hosted secret and certificate expiry tracker for Microsoft Entra ID environments.
+        Tracks app registration secrets, enterprise application certs, SAML signing certificates,
+        and service account passwords. Auto-discovery via Microsoft Graph API surfaces unmanaged
+        credentials before they expire. Microsoft Entra ID SSO (OIDC &amp; SAML 2.0), per-item
+        SMTP alerts, PostgreSQL or JSON backend.
+      </div>
+      <div class="tool-tags">
+        <span class="tool-tag">Node.js</span>
+        <span class="tool-tag">Microsoft Graph</span>
+        <span class="tool-tag">OIDC/SAML</span>
+        <span class="tool-tag">Docker</span>
+        <span class="tool-tag">nginx</span>
+      </div>
+      <div style="display:flex;align-items:center;gap:1rem;flex-wrap:wrap;margin-top:auto;">
+        <a href="https://secret.williammgordon.com/" class="project-link" target="_blank" rel="noopener">View deployment →</a>
+        <span style="font-family:var(--font-mono);font-size:0.58rem;color:var(--muted);letter-spacing:.04em;">
+          🔒 SSO protected — <a href="mailto:william.gordon.portfolio@gmail.com?subject=secret-saas%20Demo%20Request" style="color:var(--muted);text-decoration:underline;">request demo access</a>
+        </span>
+      </div>
+    </div>
+
   </div>
 </section>
 
@@ -2452,7 +2650,7 @@ body.has-banner section:not(.hero) { scroll-margin-top: 80px; }
       </form>
 
       <!-- ── Session Types Guide ─────────────────────────────────────── -->
-      <div class="sessions-section">
+      <div class="sessions-section" id="sessions-section">
         <div class="sessions-title">Session Types &amp; Pricing</div>
         <div class="session-cards">
 
@@ -2540,6 +2738,61 @@ body.has-banner section:not(.hero) { scroll-margin-top: 80px; }
       </div><!-- /.sessions-section -->
     </div>
 
+    <!-- ── Fiverr Gig Carousel — shown/hidden via freelance.json ─────────── -->
+    <div id="fiverr-gigs" style="display:none;margin-top:3rem;">
+      <div style="font-family:var(--font-mono);font-size:0.6rem;letter-spacing:.15em;text-transform:uppercase;color:var(--accent);margin-bottom:.5rem;">✦ Available on Fiverr</div>
+      <h3 style="font-family:var(--font-sans);font-size:1.3rem;font-weight:800;color:#fff;margin-bottom:.4rem;">Fiverr Gigs</h3>
+      <p style="font-size:0.8rem;color:var(--muted);margin-bottom:1.75rem;">Click a gig to open on Fiverr · Use arrows to browse · Auto-advances every 5s</p>
+
+      <div class="gig-carousel">
+        <!-- Flip card stage -->
+        <div class="gig-stage" id="gig-stage">
+          <div class="gig-flip" id="gig-flip">
+            <!-- Front face -->
+            <div class="gig-face gig-front">
+              <div class="gig-scan-wrap">
+                <img class="gig-img" id="gig-img-front" src="" alt="" loading="lazy"/>
+                <div class="gig-scan-line" id="gig-scan-front"></div>
+              </div>
+              <div class="gig-info">
+                <div class="gig-info-title"  id="gig-title-front"></div>
+                <div class="gig-info-sub"    id="gig-sub-front"></div>
+                <div class="gig-info-price"  id="gig-price-front"></div>
+                <a class="gig-cta" id="gig-cta-front" href="#" target="_blank" rel="noopener">View on Fiverr →</a>
+              </div>
+            </div>
+            <!-- Back face (next card revealed during flip) -->
+            <div class="gig-face gig-back">
+              <div class="gig-scan-wrap">
+                <img class="gig-img" id="gig-img-back" src="" alt="" loading="lazy"/>
+                <div class="gig-scan-line" id="gig-scan-back"></div>
+              </div>
+              <div class="gig-info">
+                <div class="gig-info-title"  id="gig-title-back"></div>
+                <div class="gig-info-sub"    id="gig-sub-back"></div>
+                <div class="gig-info-price"  id="gig-price-back"></div>
+                <a class="gig-cta" id="gig-cta-back" href="#" target="_blank" rel="noopener">View on Fiverr →</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Controls -->
+        <div class="gig-controls">
+          <button class="gig-nav-btn" id="gig-prev" aria-label="Previous gig">&#8592;</button>
+          <div class="gig-dots" id="gig-dots"></div>
+          <button class="gig-nav-btn" id="gig-next" aria-label="Next gig">&#8594;</button>
+        </div>
+
+        <div style="text-align:center;margin-top:1rem;">
+          <a href="https://www.fiverr.com/william112792" target="_blank" rel="noopener"
+            style="font-family:var(--font-mono);font-size:0.62rem;letter-spacing:.1em;color:var(--muted);text-decoration:none;">
+            fiverr.com/william112792 ↗
+          </a>
+        </div>
+      </div>
+    </div>
+
     <!-- Right: Contact links panel -->
     <div class="contact-links">
 
@@ -2589,24 +2842,7 @@ body.has-banner section:not(.hero) { scroll-margin-top: 80px; }
         </div>
       </a>
 
-      <!--
-        FIVERR GIGS — uncomment and add your Fiverr gig URLs when ready.
-        Duplicate the block for each gig.
-        <a class="contact-link-item" href="https://www.fiverr.com/yourusername/your-gig-slug" target="_blank" rel="noopener">
-          <span class="contact-link-icon">✦</span>
-          <div>
-            <div class="contact-link-label">Fiverr · Endpoint Automation</div>
-            <div class="contact-link-value">Intune / Autopilot deployment setup</div>
-          </div>
-        </a>
-        <a class="contact-link-item" href="https://www.fiverr.com/yourusername/your-gig-slug-2" target="_blank" rel="noopener">
-          <span class="contact-link-icon">✦</span>
-          <div>
-            <div class="contact-link-label">Fiverr · Self-Hosted Monitoring</div>
-            <div class="contact-link-value">uptime-saas deployment &amp; configuration</div>
-          </div>
-        </a>
-      -->
+
 
     </div>
   </div>
@@ -3492,7 +3728,7 @@ function scoreClass(s) {
 }
 
 function scoreDisplay(s) {
-  if (s === null || s === undefined) return '—';
+  if (s === null || s === undefined) return '\u2013';
   return s.toFixed(1);
 }
 
@@ -3508,9 +3744,12 @@ function buildRatingsRows(data) {
       return ((b.salary && b.salary.mid) || 0) - ((a.salary && a.salary.mid) || 0);
     });
   } else if (mode === 'top_rated') {
-    roles.sort(function(a,b) {
-      return (b.scores.claude || 0) - (a.scores.claude || 0);
-    });
+    // Sort by average across all models that have scores
+    function avgScore(r) {
+      var vals = Object.values(r.scores).filter(function(v) { return v !== null && v !== undefined; });
+      return vals.length ? vals.reduce(function(a,b){return a+b;},0) / vals.length : 0;
+    }
+    roles.sort(function(a,b) { return avgScore(b) - avgScore(a); });
   }
   // 'manual' — use as-is in JSON order
 
@@ -3519,12 +3758,24 @@ function buildRatingsRows(data) {
   var html = '';
   roles.forEach(function(r) {
     var s = r.scores;
+    var n = r.notes || {};
+    // Compute average
+    var vals = [s.claude, s.chatgpt, s.gemini, s.deepseek].filter(function(v){ return v !== null && v !== undefined; });
+    var avg  = vals.length ? (vals.reduce(function(a,b){return a+b;},0)/vals.length).toFixed(1) : null;
+
+    function scoreCell(val, note) {
+      var cls  = scoreClass(val);
+      var attr = note ? ' data-note="' + note.replace(/"/g,'&quot;') + '"' : '';
+      return '<div class="ratings-score ' + cls + '"' + attr + '>' + scoreDisplay(val) + '</div>';
+    }
+
     html += '<div class="ratings-row">';
     html += '<div class="ratings-role-name">' + r.role + '</div>';
-    html += '<div class="ratings-score ' + scoreClass(s.claude)   + '">' + scoreDisplay(s.claude)   + '</div>';
-    html += '<div class="ratings-score ' + scoreClass(s.chatgpt)  + '">' + scoreDisplay(s.chatgpt)  + '</div>';
-    html += '<div class="ratings-score ' + scoreClass(s.gemini)   + '">' + scoreDisplay(s.gemini)   + '</div>';
-    html += '<div class="ratings-score ' + scoreClass(s.deepseek) + '">' + scoreDisplay(s.deepseek) + '</div>';
+    html += scoreCell(s.claude,   n.claude);
+    html += scoreCell(s.chatgpt,  n.chatgpt);
+    html += scoreCell(s.gemini,   n.gemini);
+    html += scoreCell(s.deepseek, n.deepseek);
+    html += '<div class="ratings-score ' + scoreClass(avg) + '" style="font-weight:700;">' + (avg || '—') + '</div>';
     if (showSalary) {
       var salaryUrl = r.salary && r.salary.url;
       var salaryMid = r.salary && formatSalary(r.salary.mid);
@@ -3613,16 +3864,147 @@ function toggleRatings() {
 // The message field is optional — defaults to the standard text if omitted.
 // ══════════════════════════════════════════════════════════════════════════
 (function loadFreelance() {
+  var FIVERR_BASE = 'https://www.fiverr.com/william112792';
+
   fetch('freelance.json?_=' + Date.now())
     .then(function(r) { return r.ok ? r.json() : null; })
     .then(function(d) {
+      // ── Hero badge ────────────────────────────────────────────────────────
       var badge = document.getElementById('freelance-badge');
-      if (!badge) return;
-      if (!d || !d.enabled) return; // hidden by default — only show if enabled
-      badge.textContent = d.message || '· Available for freelance engagements ·';
-      badge.style.display = '';
+      if (badge && d && d.enabled) {
+        badge.textContent = d.message || '· Available for freelance engagements ·';
+        badge.style.display = '';
+      }
+
+      // ── Session Types & Pricing visibility ───────────────────────────────
+      // freelance.json: "pricing": false  → hides the section
+      // Default (field absent): section stays visible
+      var sessionsSection = document.getElementById('sessions-section');
+      if (sessionsSection && d && d.pricing === false) {
+        sessionsSection.style.display = 'none';
+      }
+
+      // ── Gig carousel ──────────────────────────────────────────────────────
+      var section = document.getElementById('fiverr-gigs');
+      if (!section || !d || !d.enabled) return;
+
+      // Filter to visible gigs only (show !== false)
+      var allGigs = (d.gigs && d.gigs.length) ? d.gigs : [
+        { title:'Windows Autopilot & Intune Setup',  sub:'Zero-Touch Provisioning · MD-102 Certified', image:'gig/AutoPilotZeroTouch.png',      url:FIVERR_BASE, price:'From $150', show:true },
+        { title:'Hybrid AD & Entra Connect',         sub:'Active Directory · Azure AD · Intune',       image:'gig/HybridADandEntraConnect.png', url:FIVERR_BASE, price:'From $125', show:true },
+        { title:'Intune App Deployment',             sub:'Win32 · MSI · EXE · MSIX',                  image:'gig/IntuneAppDeployment.png',     url:FIVERR_BASE, price:'From $75',  show:true },
+        { title:'PowerShell Automation',             sub:'Microsoft 365 · Intune · Active Directory', image:'gig/PowershellAutomation.png',    url:FIVERR_BASE, price:'From $85',  show:true },
+        { title:'Website Uptime Monitoring',         sub:'Self-Hosted · Instant Alerts · Node.js',    image:'gig/UptimeMonitoring.png',        url:FIVERR_BASE, price:'From $30',  show:true }
+      ];
+      var gigs = allGigs.filter(function(g) { return g.show !== false; });
+      if (!gigs.length) return;
+
+      section.style.display = '';
+
+      // ── Carousel state ────────────────────────────────────────────────────
+      var current  = 0;
+      var isBack   = false; // which face is currently showing
+      var flipping = false;
+      var AUTO_MS  = 5000;
+      var timer    = null;
+
+      var flip       = document.getElementById('gig-flip');
+      var dotsEl     = document.getElementById('gig-dots');
+      var stageEl    = document.getElementById('gig-stage');
+
+      // Face elements
+      var imgF   = document.getElementById('gig-img-front');
+      var titleF = document.getElementById('gig-title-front');
+      var subF   = document.getElementById('gig-sub-front');
+      var priceF = document.getElementById('gig-price-front');
+      var ctaF   = document.getElementById('gig-cta-front');
+      var imgB   = document.getElementById('gig-img-back');
+      var titleB = document.getElementById('gig-title-back');
+      var subB   = document.getElementById('gig-sub-back');
+      var priceB = document.getElementById('gig-price-back');
+      var ctaB   = document.getElementById('gig-cta-back');
+
+      // Build dots
+      gigs.forEach(function(_, i) {
+        var dot = document.createElement('div');
+        dot.className = 'gig-dot' + (i === 0 ? ' active' : '');
+        dot.addEventListener('click', function() { goTo(i); });
+        dotsEl.appendChild(dot);
+      });
+
+      function updateDots() {
+        var dots = dotsEl.querySelectorAll('.gig-dot');
+        dots.forEach(function(d, i) {
+          d.classList.toggle('active', i === current);
+        });
+      }
+
+      function fillFace(img, title, sub, price, cta, g) {
+        img.src   = g.image || '';
+        img.alt   = g.title || '';
+        title.textContent = g.title || '';
+        sub.textContent   = g.sub   || '';
+        price.textContent = g.price || '';
+        cta.href          = g.url   || FIVERR_BASE;
+      }
+
+      function setInitial() {
+        fillFace(imgF, titleF, subF, priceF, ctaF, gigs[0]);
+        if (gigs.length > 1) fillFace(imgB, titleB, subB, priceB, ctaB, gigs[1]);
+        updateDots();
+      }
+
+      function goTo(idx) {
+        if (flipping || idx === current || gigs.length < 2) return;
+        flipping = true;
+        var next = ((idx % gigs.length) + gigs.length) % gigs.length;
+
+        // Load next gig into the hidden face before flipping
+        if (isBack) {
+          fillFace(imgF, titleF, subF, priceF, ctaF, gigs[next]);
+        } else {
+          fillFace(imgB, titleB, subB, priceB, ctaB, gigs[next]);
+        }
+
+        // Trigger flip
+        isBack = !isBack;
+        flip.classList.toggle('flipped', isBack);
+        current = next;
+        updateDots();
+
+        setTimeout(function() { flipping = false; }, 700);
+        resetTimer();
+      }
+
+      function next() { goTo((current + 1) % gigs.length); }
+      function prev() { goTo((current - 1 + gigs.length) % gigs.length); }
+
+      function resetTimer() {
+        clearInterval(timer);
+        if (gigs.length > 1) timer = setInterval(next, AUTO_MS);
+      }
+
+      // Clicking the card opens Fiverr
+      stageEl.addEventListener('click', function() {
+        var g = gigs[current];
+        if (g) window.open(g.url || FIVERR_BASE, '_blank', 'noopener');
+      });
+
+      document.getElementById('gig-next').addEventListener('click', function(e) {
+        e.stopPropagation(); next();
+      });
+      document.getElementById('gig-prev').addEventListener('click', function(e) {
+        e.stopPropagation(); prev();
+      });
+
+      // Pause auto-advance on hover
+      stageEl.addEventListener('mouseenter', function() { clearInterval(timer); });
+      stageEl.addEventListener('mouseleave', resetTimer);
+
+      setInitial();
+      resetTimer();
     })
-    .catch(function() { /* no freelance.json — badge stays hidden */ });
+    .catch(function() { /* no freelance.json — section stays hidden */ });
 })();
 
 
